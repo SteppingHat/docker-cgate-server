@@ -49,9 +49,9 @@ services:
         - 20026:20026
         - 20123:20123
     volumes:
-        - <path-to-config-dir>:/config
-        - <path-to-tag-dir>:/tag
-        - <path-to-logs-dir:/logs
+        - [path-to-config-dir]:/config
+        - [path-to-tag-dir]:/tag
+        - [path-to-logs-dir]:/logs
     restart: unless-stopped
 ```
 
