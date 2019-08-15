@@ -17,39 +17,43 @@ Here are some example snippets to help you get started creating a container.
 
 ### docker
 
-    docker create \
-      --name=cgate-server \
-      -p 20023:20023 \
-      -p 20024:20024 \
-      -p 20025:20025 \
-      -p 20026:20026 \
-      -p 20123:20123 \
-      -v <path-to-config-dir>:/config \
-      -v <path-to-tag-dir>:/tag \
-      -v <path-to-logs-dir>:/logs \
-      --restart unless-stopped \
-      steppinghat/cgate-server
+```
+docker create \
+  --name=cgate-server \
+  -p 20023:20023 \
+  -p 20024:20024 \
+  -p 20025:20025 \
+  -p 20026:20026 \
+  -p 20123:20123 \
+  -v <path-to-config-dir>:/config \
+  -v <path-to-tag-dir>:/tag \
+  -v <path-to-logs-dir>:/logs \
+  --restart unless-stopped \
+  steppinghat/cgate-server
+```
 
-## docker-compose
+### docker-compose
 
 Compatble with docker-compose v3 schemas
 
-    version: '3'
-    services:
-      cgate-server:
-        image: steppinghat/cgate-server
-        container_name: cgate-server
-        ports:
-            - 20023:20023
-            - 20024:20024
-            - 20025:20025
-            - 20026:20026
-            - 20123:20123
-        volumes:
-            - <path-to-config-dir>:/config
-            - <path-to-tag-dir>:/tag
-            - <path-to-logs-dir:/logs
-        restart: unless-stopped
+```
+version: '3'
+services:
+  cgate-server:
+    image: steppinghat/cgate-server
+    container_name: cgate-server
+    ports:
+        - 20023:20023
+        - 20024:20024
+        - 20025:20025
+        - 20026:20026
+        - 20123:20123
+    volumes:
+        - <path-to-config-dir>:/config
+        - <path-to-tag-dir>:/tag
+        - <path-to-logs-dir:/logs
+    restart: unless-stopped
+```
 
 ### Version tags
 
@@ -59,7 +63,7 @@ Compatble with docker-compose v3 schemas
 | 2.11 | Releases from the 2.11.x branch |
         
 
-## Parameters
+### Parameters
 
 | Parameter | Function |
 | --------- | -------- |
