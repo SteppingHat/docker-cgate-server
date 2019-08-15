@@ -72,6 +72,8 @@ services:
 | `-p 20025` | CGate Load Change port |
 | `-p 20026` | CGate Config Change port |
 | `-p 20123` | CGate Secure Command port |
-
+| `-v :/config` | CGate config directory (`access.txt` goes here) |
+| `-v :/tag` | CGate tag directory (XML project files go here) |
+| `-v :/logs` | CGate logs directory |
 
 _Written by Javan Eskander @SteppingHat_
