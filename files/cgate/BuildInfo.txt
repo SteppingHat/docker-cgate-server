@@ -1,0 +1,8 @@
+
+Copyright 1999-2015 Schneider Electric (Australia) Pty Ltd Pty Ltd
+All Rights Reserved.
+Clipsal C-Gate
+Version: 2.11.4
+Build:	3251
+Date:	20180703-0118
+		

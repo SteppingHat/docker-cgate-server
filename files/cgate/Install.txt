@@ -1,0 +1,28 @@
+
+Clipsal C-Gate 2.11.4 build 3251
+
+Brief Installation instructions
+
+* JDK
+
+    This version of C-Gate includes a private instance of Oracle Java 7 32-bit.  This instance
+	will not conflict with any other version of Java running on your system.
+
+* To Install
+
+    C-Gate is included in the C-Bus Toolkit software installer for Windows.
+
+    If you cannot or do not wish to run the Toolkit software installer, you can download 
+	the C-Gate zip distribution or (with care) copy the C-Gate directory from another computer 
+	which has had C-Bus Toolkit installed.
+
+* To Run 
+
+    On Windows it is recommended to launch C-Gate by running the cgate.exe.  
+	
+	In certain environments you may wish to launch it on your own Java instance:  java -jar cgate.jar 
+
+* Documentation
+
+    The C-Gate Manual is provided in both PDF and CHM formats in the C-Gate directory.
+		

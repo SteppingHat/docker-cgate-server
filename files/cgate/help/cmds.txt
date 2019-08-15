@@ -1,0 +1,3067 @@
+#
+Syntax:
+# [any-text]
+Description:
+Inserts a comment into the command stream. Comments are ignored by the
+  command processor.
+'//' can also be used as a comment marker.
+~#~
+//
+Syntax:
+// [any-text]
+Description:
+Inserts a comment into the command stream. Comments are ignored by the
+  command processor.
+Because // is also used in specifying a fully-qualified address including a
+  project, it is only a comment when it is the first token on the line.
+'#' can also be used as a comment marker.
+~#~
+ACCESS
+Syntax:
+ACCESS [?]
+Description:
+Lists the ACCESS sub-commands:
+ACCESS ADD - Adds an entry to the access control list.
+ACCESS DELETE - Deletes an entry from the access control list.
+ACCESS LIST - Lists current access control entries.
+ACCESS LOAD - Loads an access control file in as the current access control
+  list.
+ACCESS SAVE - Saves an access control file from the current access control
+  list.
+~#~
+ACCESS ADD
+Syntax:
+ACCESS ADD arguments
+arguments = ( "user" username password access-level )
+         | ( "interface" interface-address access-level )
+         | ( "remote" hostname-or-ip-address access-level )
+access-level = none | connect | monitor | operate | admin | program | debug
+interface-address = hostname or IPv4 address
+hostname-or-ip-address = hostname or IPv4 address
+Description:
+Adds an entry to the access control list.  This will add a new line to the
+  current list held in the server.  To save this to disk and make the change
+  permanent even after C-Gate is restarted, use the ACCESS SAVE command.
+~#~
+ACCESS DELETE
+Syntax:
+ACCESS DELETE index
+index = the line number given from an ACCESS LIST command.
+Description:
+Deletes an entry from the access control list held in the C-Gate server.
+  The list can be viewed with the ACCESS LIST command.
+~#~
+ACCESS LIST
+Syntax:
+ACCESS LIST
+Description:
+Lists the current access control list held in the C-Gate server.
+The line numbers given in the list are used with the ACCESS DELETE command.
+~#~
+ACCESS LOAD
+Syntax:
+ACCESS LOAD filename
+filename = name of file to load, relative to the config directory
+Description:
+Loads an access control file into the C-Gate server access control list.  If
+  a filename is given, that file will be loaded. Note that the filename is
+  relative to the config directory. Otherwise, the file in the configuration
+  parameter access-control-file is used.  By default this is access.txt.
+~#~
+ACCESS SAVE
+Syntax:
+ACCESS SAVE filename
+filename = name of file to save to, relative to the config directory
+Description:
+Saves the current access control list in the C-Gate server to a file.  If a
+  filename is given, the access control list will be written to that file.
+  Note that the filename is relative to the config directory.  Otherwise, the
+  file name in the configuration parameter access-control-file is used.  By
+  default this is access.txt.
+~#~
+AIRCON
+Syntax:
+AIRCON [?]
+Description:
+Lists the AIRCON sub-commands:
+AIRCON REFRESH - Sends a refresh request to an air-conditioning ward.
+AIRCON SET_HUMIDITY_SETBACK_LIMIT - Sets the error allowed in the set
+  humidity for zones.
+AIRCON SET_HUMIDITY_LOWER_GUARD_LIMIT - Sets the absolute minimum humidity
+  allowed in zones.
+AIRCON SET_HUMIDITY_UPPER_GUARD_LIMIT - Sets the absolute maximum humidity
+  allowed in zones.
+AIRCON SET_HVAC_LOWER_GUARD_LIMIT - Sets the absolute minimum temperature
+  allowed in zones.
+AIRCON SET_HVAC_SETBACK_LIMIT - Sets the error allowed in the set
+  temperature for zones.
+AIRCON SET_HVAC_UPPER_GUARD_LIMIT - Sets the absolute maximum temperature
+  allowed in zones.
+AIRCON SET_WARD_OFF - Switches off all plant in all the zones in the
+  specified ward.
+AIRCON SET_WARD_ON - Returns an air-conditioning ward to its previous
+  operational state.
+AIRCON SET_ZONE_HUMIDITY_MODE - Broadcasts Humidity mode and level required
+  for zones.
+AIRCON SET_ZONE_HVAC_MODE - Broadcasts HVAC mode and level required for zones.
+~#~
+AIRCON REFRESH
+Syntax:
+AIRCON REFRESH app ward
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+Description:
+Sends a refresh request to an air-conditioning ward.
+~#~
+AIRCON SET_HUMIDITY_LOWER_GUARD_LIMIT
+Syntax:
+AIRCON SET_HUMIDITY_LOWER_GUARD_LIMIT app ward zone-list level mode raw-flag
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone addresses (0..6) (0 is the
+  'unswitched' zone)
+level = required lower humidity limit
+mode = required Humidity mode
+raw-flag = 0 if level is a humidity percentage, 1 if level is a raw value
+- mode: 
+   0 = off
+   1 = humidify only
+   2 = dehumidify only
+   3 = humidity control
+- humidity level is 0% to 100%
+- raw humidity level can be a fraction of plant capacity eg 50% or -10%
+Description:
+Sets the absolute minimum humidity allowed in zones.
+~#~
+AIRCON SET_HUMIDITY_SETBACK_LIMIT
+Syntax:
+AIRCON SET_HUMIDITY_SETBACK_LIMIT app ward zone-list level mode raw-flag
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone numbers (0..6) (0 is the
+  'unswitched' zone)
+level = required setback limit
+mode = required Humidity mode
+raw-flag = 0 if level is a humidity percentage, 1 if level is a raw value
+- mode: 
+   0 = off
+   1 = humidify only
+   2 = dehumidify only
+   3 = humidity control
+- humidity level is 0% to 100%
+- raw humidity level can be a fraction of plant capacity eg 50% or -10%
+Description:
+Sets the error allowed in the set humidity for zones.
+~#~
+AIRCON SET_HUMIDITY_UPPER_GUARD_LIMIT
+Syntax:
+AIRCON SET_HUMIDITY_UPPER_GUARD_LIMIT app ward zone-list level mode raw-flag
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone addresses (0..6) (0 is the
+  'unswitched' zone)
+level = required lower humidity limit
+mode = required Humidity mode
+raw-flag = 0 if level is a humidity percentage, 1 if level is a raw value
+- mode: 
+   0 = off
+   1 = humidify only
+   2 = dehumidify only
+   3 = humidity control
+- humidity level is 0% to 100%
+- raw humidity level can be a fraction of plant capacity eg 50% or -10%
+Description:
+Sets the absolute maximum humidity allowed in zones.
+~#~
+AIRCON SET_HVAC_LOWER_GUARD_LIMIT
+Syntax:
+AIRCON SET_HVAC_LOWER_GUARD_LIMIT app ward zone-list level mode raw-flag
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone addresses (0..6) (0 is the
+  'unswitched' zone)
+level = required lower temperature limit
+mode = required HVAC mode
+raw-flag = 0 if level is a temperature value, 1 if level is a raw value
+- mode: 
+   0 = off
+   1 = heat only
+   2 = cool only
+   3 = heat & cool
+   4 = vent/fan only
+- temperature level is in degrees centigrade
+- raw temperature level can be a fraction of plant capacity, eg 50% or -10%
+Description:
+Sets the absolute minimum temperature allowed in zones.
+~#~
+AIRCON SET_HVAC_SETBACK_LIMIT
+Syntax:
+AIRCON SET_HVAC_SETBACK_LIMIT app ward zone-list limit mode raw-flag
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone addresses (0..6) (0 is the
+  'unswitched' zone)
+limit = required setback limit
+mode = required HVAC mode
+raw-flag = 0 if level is a temperature value, 1 if level is a raw value
+- mode: 
+   0 = off
+   1 = heat only
+   2 = cool only
+   3 = heat & cool
+   4 = vent/fan only
+- temperature level is in degrees centigrade
+- raw temperature level can be a fraction of plant capacity, eg 50% or -10%
+Description:
+Sets the error allowed in the set temperature for zones.
+~#~
+AIRCON SET_HVAC_UPPER_GUARD_LIMIT
+Syntax:
+AIRCON SET_HVAC_UPPER_GUARD_LIMIT app ward zone-list level mode raw-flag
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone addresses (0..6) (0 is the
+  'unswitched' zone)
+level = required lower temperature limit
+mode = required HVAC mode
+raw-flag = 0 if level is a temperature value, 1 if level is a raw value
+- mode: 
+   0 = off
+   1 = heat only
+   2 = cool only
+   3 = heat & cool
+   4 = vent/fan only
+- temperature level is in degrees centigrade
+- raw temperature level can be a fraction of plant capacity, eg 50% or -10%
+Description:
+Sets the absolute maximum temperature allowed in zones..
+~#~
+AIRCON SET_WARD_OFF
+Syntax:
+AIRCON SET_WARD_OFF app ward
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+Description:
+Switches off all plant in all of the zones in the specified ward.
+~#~
+AIRCON SET_WARD_ON
+Syntax:
+AIRCON SET_WARD_ON app ward
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0-255)
+Description:
+Returns an air-conditioning ward to its previous operational state.
+~#~
+AIRCON SET_ZONE_HUMIDITY_MODE
+Syntax:
+AIRCON SET_ZONE_HUMIDITY_MODE app ward zone-list mode raw-flag
+  setback-enabled guard-enabled use-aux-level type level aux-level
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone numbers (0..6) (0 is the
+  'unswitched' zone)
+mode = required Humidity mode
+raw-flag = 0 if level is a humidity percentage, 1 if level is a raw value
+setback-enabled = 1 for setback enabled
+guard-enabled = 1 for guard enabled
+use-aux-level = 1 if aux-level is used, else 0 for automatic operation
+type = type of the Humidity plant
+level = humidity % value or raw level
+aux-level = auxiliary level value
+- mode: 
+   0 = off
+   1 = humidify only
+   2 = dehumidify only
+   3 = humidity control
+- type: 
+   0 = none
+   1 = evaporative
+   2 = refrigerative
+   3 = both
+- humidity level is 0% to 100%
+- raw humidity level can be a fraction of plant capacity eg 50% or -10%
+- aux-level is flags & fan mode combined into one byte: RMmmmmmm where... 
+    R = reserved, always 0
+    M = 0 for automatic fan, 1 for continuous fan
+    fan speed mmmmmm: 0 = default speed, 1..63 = speed setting (plant
+  dependent)
+  For example, binary 01000011 = decimal 67, which is: fan on, speed = 3.
+  binary 00000010 = decimal 2, which is: fan automatic, speed = 2.
+Description:
+Broadcasts humidity mode and level required for zones.
+~#~
+AIRCON SET_ZONE_HVAC_MODE
+Syntax:
+AIRCON SET_ZONE_HVAC_MODE app ward zone-list mode raw-flag setback-enabled
+  guard-enabled use-aux-level type level aux-level
+app = air-conditioning application address (net/$AC)
+ward = air-conditioning ward number (0..255)
+zone-list = comma-separated list of zone numbers (0..6) (0 is the
+  'unswitched' zone)
+mode = required HVAC mode
+raw-flag = 0 if level is a temperature value, 1 if level is a raw value
+setback-enabled = 1 for setback enabled
+guard-enabled = 1 for guard enabled
+use-aux-level = 1 if aux-level is used, else 0 for automatic operation
+type = type of the HVAC plant
+level = temperature or raw level
+aux-level = auxiliary level value (eg fan speed and mode)
+- mode: 
+   0 = off
+   1 = heat only
+   2 = cool only
+   3 = heat & cool
+   4 = vent/fan only
+- type: 
+   0 = none
+   1 = furnace
+   2 = evaporative
+   3 = reverse-cycle
+   4 = heat-pump-heating
+   5 = heat-pump-cooling
+   6 = furnace/evap
+   7 = furnace/heat-pump-cooling
+   8 = hydronic
+   9 = hydronic/heat-pump-cooling
+  10 = hydronic/evap
+  11-254 = reserved (don't use)
+ 255 = any (type 255 allows service to select a plant type from those
+  available)
+- temperature is in degrees centigrade
+- raw temperature level can be a fraction of plant capacity, eg 50% or -10%
+- aux-level is flags & fan mode combined into one byte: RMmmmmmm where... 
+    R = reserved, always 0
+    M = 0 for automatic fan, 1 for continuous fan
+    fan speed mmmmmm: 0 = default speed, 1..63 = speed setting (plant
+  dependent)
+  For example, binary 01000011 = decimal 67, which is: fan on, speed = 3.
+  binary 00000010 = decimal 2, which is: fan automatic, speed = 2.
+Description:
+Broadcasts HVAC mode and level required for zones.
+~#~
+APIVER
+Syntax:
+APIVER [details]
+Description:
+Lists API versions for C-Gate commands, modules and othe components.
+Add the 'details' option to give the details of the last API change.
+~#~
+AUDIO
+Syntax:
+AUDIO [?]
+Description:
+Lists the AUDIO sub-commands:
+AUDIO CURRENT_FEED - Reports the current feed for the given zone.
+AUDIO DYNAMIC_1 - Request a matrix switcher to send a Dynamic 1 operation in
+  the given zone.
+AUDIO DYNAMIC_2 - Request a matrix switcher to send a Dynamic 2 operation in
+  the given zone.
+AUDIO HIGH_PRIORITY - Request an output device to turn on and go to a set
+  output level and feed.
+AUDIO MUTE - Set the mute mode of an amplifier.
+AUDIO NEXT_FEED - Set the next feed for the given zone.
+AUDIO NEXT_LANGUAGE - Set the next language for the given zone.
+AUDIO OFF - Send an off operation.
+AUDIO ON - Send an on operation.
+AUDIO OUTPUT_COMMON_CONTROL - Request all devices to perform a function.
+AUDIO OUTPUT_DEVICE_STATUS_REQUEST - Request status of all devices.
+AUDIO OUTPUT_ERROR_CODE - Send an error code notification.
+AUDIO PREVIOUS_FEED - Set the previous feed for the given zone.
+AUDIO RAMP - Send a ramp operation.
+AUDIO REQUEST_CURRENT_FEED - Request the current feed of a zone.
+AUDIO SET_FEED - Set the current feed of a zone.
+AUDIO TERMINATERAMP - Terminate a ramp in progress.
+AUDIO ZONE_DESCRIPTOR_REQUEST - Send feed description to DLT labelling
+  devices.
+AUDIO ZONE_FEED_LABEL_REQUEST - Send feed description and dynamic labels to
+  DLT labelling devices.
+~#~
+AUDIO CURRENT_FEED
+Syntax:
+AUDIO CURRENT_FEED app multiplexer zone feed gain
+AUDIO CURRENT_FEED app Z function gain
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+feed = feed number (0..7)
+function = zone function (0..255)
+gain = amount of gain (0..4)
+Description:
+Reports the current feed for the given zone.
+~#~
+AUDIO DYNAMIC_1
+Syntax:
+AUDIO DYNAMIC_1 app multiplexer zone
+AUDIO DYNAMIC_1 app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Instruct the matrix switcher in the given zone to send a feed-specific
+  Dynamic Function 2 command to the internal NIRT / C-Bus.
+~#~
+AUDIO DYNAMIC_2
+Syntax:
+AUDIO DYNAMIC_2 app multiplexer zone
+AUDIO DYNAMIC_2 app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Instruct the matrix switcher in the given zone to send a feed-specific
+  Dynamic Function 1 command to the internal NIRT / C-Bus.
+~#~
+AUDIO HIGH_PRIORITY
+Syntax:
+AUDIO HIGH_PRIORITY app multiplexer level feed
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+level = level (0..255)
+feed = feed number (0..7)
+Description:
+Request an output device in a zone to turn on and go to a set output level
+  and feed, or if the level is zero to return to the prior state.
+~#~
+AUDIO MUTE
+Syntax:
+AUDIO MUTE app multiplexer zone mode
+AUDIO MUTE app Z function mode
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+mode = mode (0, 2, 5, 7, 255)
+           0 = turn amplifier off
+     2 = amplifier on, volume normal, speakers off
+     5 = amplifier on, volume preset, speakers off
+     7 = amplifier on, volume preset, speakers on
+     255 = amplifier on, volume normal, speakers on
+Description:
+Set the mute mode of an amplifier.
+~#~
+AUDIO NEXT_FEED
+Syntax:
+AUDIO NEXT_FEED app multiplexer zone
+AUDIO NEXT_FEED app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Sets the next feed for the given zone.
+~#~
+AUDIO NEXT_LANGUAGE
+Syntax:
+AUDIO NEXT_LANGUAGE app multiplexer zone
+AUDIO NEXT_LANGUAGE app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Sets the next language for the given zone.
+~#~
+AUDIO OFF
+Syntax:
+AUDIO OFF app multiplexer zone code
+AUDIO OFF app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+code = zone code (0..7)
+function = zone function (0..255)
+Description:
+Set the value of the Function Code referenced by the Zone Function Variable
+  to 0.
+~#~
+AUDIO ON
+Syntax:
+AUDIO ON app multiplexer zone code
+AUDIO ON app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+code = zone code (0..7)
+function = zone function (0..255)
+Description:
+Set the value of the Function Code referenced by the Zone Function Variable
+  to 255.
+~#~
+AUDIO OUTPUT_COMMON_CONTROL
+Syntax:
+AUDIO OUTPUT_COMMON_CONTROL app control-code
+app = audio application address (net/$CD)
+control-code = control code (0)
+     0 = turn off
+Description:
+All output devices are to act upon this command according to the value of
+  <Control Code>.
+~#~
+AUDIO OUTPUT_DEVICE_STATUS_REQUEST
+Syntax:
+AUDIO OUTPUT_DEVICE_STATUS_REQUEST app parameter
+app = audio application address (net/$CD)
+parameter = parameter (0)
+Description:
+Requests that all output devices return their status.
+~#~
+AUDIO OUTPUT_ERROR_CODE
+Syntax:
+AUDIO OUTPUT_ERROR_CODE app multiplexer zone code
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+code = error code (0..1)
+     0 = overheating
+     1 = low voltage
+Description:
+A device is reporting an error condition.
+~#~
+AUDIO PREVIOUS_FEED
+Syntax:
+AUDIO PREVIOUS_FEED app multiplexer zone
+AUDIO PREVIOUS_FEED app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Sets the previous feed for the given zone.
+~#~
+AUDIO RAMP
+Syntax:
+AUDIO RAMP app multiplexer zone code level rate
+AUDIO RAMP app Z function level rate
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+code = zone code (0..7)
+function = zone function (0..255)
+level = level to ramp to (0..255)
+rate = time taken to perform the ramp (0..15)
+     0 = instantaneous
+     1 = 4 seconds
+     2 = 8 seconds
+     3 = 12 seconds
+     4 = 20 seconds
+     5 = 30 seconds
+     6 = 40 seconds
+     7 = 1 minute
+     8 = 90 seconds
+     9 = 2 minutes
+     10 = 3 minutes
+     11 = 5 minutes
+     12 = 7 minutes
+     13 = 10 minutes
+     14 = 15 minutes
+     15 = 17 minutes
+Description:
+Ramp the zone function to the specified level at the given rate.
+~#~
+AUDIO REQUEST_CURRENT_FEED
+Syntax:
+AUDIO REQUEST_CURRENT_FEED app multiplexer zone
+AUDIO REQUEST_CURRENT_FEED app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Request the current feed for the given zone.
+~#~
+AUDIO SET_FEED
+Syntax:
+AUDIO SET_FEED app multiplexer zone feed option
+AUDIO SET_FEED app Z function option
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+feed = feed number (0..7)
+function = zone function (0..255)
+option = option (0..1)
+     0 = allow labels and annunciation on feed change
+     1 = disable labels and annunciation on feed change
+Description:
+Sets the current feed for the given device.
+~#~
+AUDIO TERMINATERAMP
+Syntax:
+AUDIO TERMINATERAMP app multiplexer zone code
+AUDIO TERMINATERAMP app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+code = zone code (0..7)
+function = zone function (0..255)
+Description:
+Terminate a ramp operation in progress on the given zone.
+~#~
+AUDIO ZONE_DESCRIPTOR_REQUEST
+Syntax:
+AUDIO ZONE_DESCRIPTOR_REQUEST app multiplexer zone
+AUDIO ZONE_DESCRIPTOR_REQUEST app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Instruct the matrix switcher in the given zone to send the feed description
+  to DLT labelling devices.
+~#~
+AUDIO ZONE_FEED_LABEL_REQUEST
+Syntax:
+AUDIO ZONE_FEED_LABEL_REQUEST app multiplexer zone
+AUDIO ZONE_FEED_LABEL_REQUEST app Z function
+app = audio application address (net/$CD)
+multiplexer = multiplexer number (0..2)
+zone = zone number (0..7)
+function = zone function (0..255)
+Description:
+Instruct the matrix switcher in the given zone to send the feed description,
+  Dynamic 1 and 2 labels to DLT labelling devices.
+~#~
+BROADCAST_EVENT
+Syntax:
+BROADCAST_EVENT event-class [event-text]
+event-class = A string (ending at the first whitespace) that gives the class
+  of this event.
+         There are no restriction on values of the class. This is determined
+  by the using application.
+event-text = (optional) Further descriptive string to the end of the line.
+Description:
+Broadcasts an event on the event port and status change port with the given
+  event-class and event-text.
+~#~
+CGL
+Syntax:
+CGL [?]
+Description:
+Lists the CGL sub-commands:
+CGL EXPORT - Exports a network to CGL format.
+CGL IMPORT - Imports a network in CGL format to the given project.
+~#~
+CGL EXPORT
+Syntax:
+CGL EXPORT project-name [network-list [application-list]]
+Description:
+Gets a part of the current Tag Database as a snippet in CGL Format.
+The db-address given is any object in the XML database, and can be specified
+  as either a path from the base of the tag database (ie
+  /Installation/InstallationDetail/Installer), or a C-Bus network address, of
+  a tag name.
+This command returns:
+- a 343-Begin XML snippet response 
+- The XML snippet requested, as one or more lines starting with "347-". This
+  starts with a <?xml … ?> line.  Note that the XML is not pretty-printed.
+- a 344 End XML snippet response
+If a single element is selected by address, for example an element that
+  simply contains a string, then an XML snippet similar to the following will
+  be returned just giving the raw type of the field:
+347-<?xml version="1.0"?>
+347-<string>2001-11-01T13:05:34.153</string>
+~#~
+CGL IMPORT
+Syntax:
+CGL IMPORT project-name << end-tag
+Description:
+Replaces all or part of the current Tag Database with a snippet in CGL
+  Format given after the command. The project-name must be a project that has
+  already been loaded in C-Gate.
+The CGL required for this command is provided as a here document, meaning is
+  it provided in one or more lines following the command, with the command
+  terminated by the end-tag given on the command line after the << characters,
+  on a line by itself.
+This command returns:
+- a series of 380 messages for each item that was added or modified. 
+- a 200 OK message when concluded. 
+- one or more errors if other conditions occur.
+~#~
+CLOCK
+Syntax:
+CLOCK [?]
+Description:
+Lists the CLOCK sub-commands:
+CLOCK DATE - Gets or sets the date.
+CLOCK REQUEST REFRESH - Request a time-master to broadcast the date and time.
+CLOCK TIME - Gets or sets the time.
+~#~
+CLOCK DATE
+Syntax:
+CLOCK DATE app [date | "system"]
+app = clock application address (net/223)
+date = yyyy-mm-dd
+- yyyy = 4 year date (eg. 2008) 
+- mm = months (01..12) 
+- dd = days (01-31)
+"system" -if this is given instead of yyyy-mm-dd, C-Gate's current date is
+  used
+Description:
+Gets or sets the date.
+CLOCK DATE app  with no parameters will return the current date.  Adding a
+  date will set the network date by sending a clock date command to the
+  network.
+~#~
+CLOCK REQUEST_REFRESH
+Syntax:
+CLOCK REQUEST_REFRESH app
+app = clock application address (net/223)
+Description:
+Broadcasts a request_refresh message, which will cause a time-master device
+  to broadcast the current date and time.
+~#~
+CLOCK TIME
+Syntax:
+CLOCK TIME app [time | "system" [daylight-flag]]
+app = clock application address (net/223)
+time = hh:mm:ss
+-if "system" is given instead, C-Gate's current time is used
+- hh = 00..23 
+- mm = 00..59 
+- ss = 00..59
+daylight-flag:
+- 0 = no daylight saving 
+- 1 = this time includes 1 hr advance 
+- 255 = daylight saving offset unknown
+- If the daylight-flag is omitted, it defaults to a value of 255 ($FF).
+Description:
+Gets or sets the time.
+CLOCK TIME app   with no parameters will return the current time as
+  understood by this application. Adding a time and possibly a daylight saving
+  flag will set the network time by sending a clock time command to the
+  network.
+~#~
+CONFIG
+Syntax:
+CONFIG [?]
+Description:
+Lists the CONFIG sub-commands:
+CONFIG GET - Get the value of a configuration parameter
+CONFIG INFO - Get information about a configuration parameter
+CONFIG LOAD - Load config parameters from either a project db or a file or
+  both
+CONFIG SAVE - Save the current config parameters to either a project db or a
+  file
+CONFIG SET - Set the value of a configuration parameter
+CONFIG OBGET - Get the value of a configuration parameter for a scope object
+CONFIG OBSET - Set the value of a configuration parameter for a scope object
+~#~
+CONFIG GET
+Syntax:
+CONFIG GET config-parameter
+config-parameter = config parameter name or "*" to get all config parameters
+Description:
+Returns the value of a configuration parameter, or values of all known
+  configuration parameters if the parameter is given as *.
+See Configuration for more information.
+~#~
+CONFIG INFO
+Syntax:
+CONFIG INFO config-parameter
+config-parameter = config parameter name or "*" to get all config parameters
+Description:
+Returns full information over several lines about a configuration parameter,
+  or values of all known configuration parameters if the parameter is given as
+  *.
+~#~
+CONFIG LOAD
+Syntax:
+CONFIG LOAD config-type [filename]
+config-type = "project" | "global" | "all"
+Description:
+Loads configuration parameters into the server from either the current
+  project database (as defined by the PROJECT USE command and the PROJECT
+  commands) or from the global configuration file, or both.
+Use this command to load an existing on-disk configuration into the server.
+  Note that there may be some immediate impact from the loading of some
+  parameters.
+~#~
+CONFIG OBGET
+Syntax:
+CONFIG OBGET object config-parameter
+object = the global, project or network scope object from which to get the
+  config parameter
+config-parameter = config parameter name or "*" to get all config parameters
+Description:
+Returns the value of a configuration parameter of the object, or values of
+  all known configuration parameters of the object if the parameter is given
+  as *.
+See Configuration for more information.  See Scope and Scope Objects for
+  more information on scope objects.
+~#~
+CONFIG OBRESET
+Syntax:
+CONFIG OBRESET object [config-parameter]
+object = the project or network scope object on which to reset the config
+  parameter to the global value
+config-parameter = config parameter name
+Description:
+Resets the value of a configuration parameter of an object to the global
+  value. if the parameter is not given, all parameters are reset.
+See Configuration for more information.  See Scope and Scope Objects for
+  more information on scope objects.
+~#~
+CONFIG OBSET
+Syntax:
+CONFIG OBSET object config-parameter [value]
+object = the global, project or network scope object on which to set the
+  config parameter
+config-parameter = config parameter name
+value = new value for the parameter, can include spaces
+Description:
+Sets the value of a configuration parameter of an object to the given value.
+  if the value is not given, the parameter takes on the null value.  The value
+  given can have embedded spaces and these will be included in the value.
+See Configuration for more information.  See Scope and Scope Objects for
+  more information on scope objects.
+~#~
+CONFIG SAVE
+Syntax:
+CONFIG SAVE config-type [filename]
+config-type = "project" | "global" | "all"
+Description:
+Saves configuration parameters from the server to either the current project
+  database "project" (as defined by the PROJECT USE command and the PROJECT
+  commands) or to the global configuration file "global", or both "all".
+Use this command to save a current configuration for later use. This has no
+  impact on the currently operating parameters in the server.
+~#~
+CONFIG SET
+Syntax:
+CONFIG SET config-parameter [value]
+config-parameter = config parameter name
+value = new value for the parameter, can include spaces
+Description:
+Sets the value of a configuration parameter to the given value. if the value
+  is not given, the parameter takes on the null value.  The value given can
+  have embedded spaces and these will be included in the value.
+See Configuration for more information on setting config parameters, their
+  scope and when changes are effective.
+~#~
+CONFIRM
+Syntax:
+CONFIRM
+Description:
+Used when a 600 message is received, to confirm the execution of a shutdown
+  or restart before it proceeds.  This is meant to stop people shutting down
+  the server by having their fingers typing on automatic.
+~#~
+DBADD
+Syntax:
+DBADD db-address element-type
+db-address = address of an existing element under which to add the new element
+element-type = type of the new object to add to the database
+Suitable types include: Project, Network, Unit, Application, Group, Level.
+Description:
+Adds an object to a database.
+~#~
+DBADDSAFE
+Syntax:
+DBADDSAFE parent-address element-type [element-address] [tag-name]
+parent-address = address of an existing element under which to add the new
+  element
+element-type = type of the new object to add to the database
+element-address = address of the new object, it is mandatory if the object
+  has an Address field
+tag-name = tag name of the new object, it is mandatory if the object has a
+  TagName field
+Allowed types include but not limited to: Project, Network, Unit,
+  Application, Group, Level, TagDLT.
+Description:
+Adds an object to a database and apply business rules check when the object
+  has Address and TagName fields.
+The rules for element-address:
+- it can not be null or blank 
+- if element-type is Network, Unit, Application, Group or Level, it must be
+  the string representation of decimal number (i.e. only 0~9 is allowed in the
+  element-address parameter)
+- if element-type is Network, Unit, Application, Group or Level, it must be
+  within the range of [0, 255]
+- it can not be the same as the address of an existing object under
+  parent-address
+The rules for tag-name:
+- it can not be null or blank 
+- it can not be the same as the tag name of an existing object under
+  parent-address
+Additional rules:
+- Group object can not be added to Application 255 
+- Level object can not be added to Group 255
+~#~
+DBCOPY
+Syntax:
+DBCOPY source-address destination-parent-address
+source-address = the database address of the part of the database to copy
+destination-parent-address = the parent element to hold the copied part of
+  the database
+Description:
+Copies part of a tag database tree to another place. This means a unit or
+  network definiton, for example, can be copied to create a new entry.
+You can copy parts of databases between projects by using //project-name/ as
+  address prefixes
+Notes:
+The destination part of the tree has new object identifiers (OIDs) generated
+  for all elements that have OIDs.
+If the source and destination databases are the same (copying within one
+  database) then the TagName and Address fields are not copied and are set to
+  null in the destination.  These addresses will need to be set to allow the
+  database contents to be addressed by Address and TagName.
+However, if he source and destination databases or projects are different,
+  then TagNames and Addresses are copied with the rest of the elements.
+~#~
+DBCOPYSAFE
+Syntax:
+DBCOPYSAFE source-address destination-parent-address
+  [destination-element-address] [destination-tag-name]
+source-address = the database address of the part of the database to copy
+destination-parent-address = the parent element to hold the copied part of
+  the database
+destination-element-address = the address of the copied object; it is
+  mandatory if the object has an Address field and is being copied to the same
+  parent node
+destination-tag-name = the tag name of the copied object; it is mandatory if
+  the object has a TagName field and is being copied to the same parent node
+Description:
+Copies part of a tag database tree to another place. This means a unit or
+  network definiton, for example, can be copied to create a new entry. The
+  source object is not restricted to unit or network, e.g. applicatoin or
+  group object can also be copied.
+You can copy parts of databases between projects by using //project-name/ as
+  address prefixes
+Notes:
+The destination part of the tree has new object identifiers (OIDs) generated
+  for all elements that have OIDs.
+All fields of the source object are copied to the destination object,
+  including Address and TagName fields.
+There are some business rules check before copying the object and the rules
+  are:
+- the destination object's parent node must have the same type as the source
+  object's parent node
+- if element-type is Network, Unit, Application, Group or Level,
+  destination-element-address must be the string representation of decimal
+  number and its value must be within the range of [0, 255]
+- the destination-element-address can not be the same as the address of an
+  existing object under destination-parent-address if it is provided
+- the destination-tag-name can not be the same as the tag name of an
+  existing object under destination-parent-address if it is provided
+~#~
+DBCREATENET
+Syntax:
+DBCREATENET address name type interface-address
+address = address of the new network (0..255)
+name = name of the new network
+type = type of the network interface (Serial | Cni | Bridge)
+interface-address = interface details
+Description:
+Creates a new network in the database.  This command is equivalent to the
+  following sequence of commands:
+dbadd Installation/Project Network
+dbset <oid>/NetworkNumber "address"
+dbset <oid>/Address "address"
+dbset <oid>/TagName "name"
+dbadd <oid> Interface
+dbset <oid2>/InterfaceType "type"
+dbset <oid2>/InterfaceAddress "interface-address"
+Note that this command on its own does not persist the new object to disk.
+  You need to follow this with a PROJECT SAVE.
+~#~
+DBDELETE
+Syntax:
+DBDELETE element-address
+Description:
+Deletes an  element from the current tag database.
+~#~
+DBGET
+Syntax:
+DBGET parameter-address
+parameter-address = Address of a tag database element or a C-Gate object
+  address
+Description:
+Gets the value of an element at an address. If the address points to an
+  element with one or more sub-elements, the sub-elements are displayed.
+~#~
+DBGETXML
+Syntax:
+DBGETXML db-address
+Description:
+Gets a part of the current Tag Database as a snippet of XML.
+The db-address given is any object in the XML database, and can be specified
+  as either a path from the base of the tag database (ie
+  /Installation/InstallationDetail/Installer), or a C-Bus network address, of
+  a tag name.
+This command returns:
+- a 343-Begin XML snippet response 
+- The XML snippet requested, as one or more lines starting with "347-". This
+  starts with a <?xml … ?> line.  Note that the XML is not pretty-printed.
+- a 344 End XML snippet response
+If a single element is selected by address, for example an element that
+  simply contains a string, then an XML snippet similar to the following will
+  be returned just giving the raw type of the field:
+347-<?xml version="1.0"?>
+347-<string>2001-11-01T13:05:34.153</string>
+~#~
+DBLOAD
+Syntax:
+DBLOAD filename
+Description:
+In normal use, the PROJECT LOAD command should be used instead of DBLOAD to
+  open project databases.
+Loads a project database into C-Gate in the current project.
+This makes the database the active project database for the current project.
+If and only if the filename given has an extension of ".zip", C-Gate will
+  attempt to uncompress a ZIP archive containing the XML tag database.  If the
+  extension ".gz" is given, C-Gate will attempt to use GZIP to uncompress the
+  file before reading.  If any other extension is given, or no extension is
+  given, then the file is assumed and expected to be in an XML form, though
+  C-Gate does not assume a .XML extension.
+If the filename is an absolute path, then the file will be loaded from that
+  absolute filename.  If a relative path is given, then the path will be
+  relative to the path given in the tag-base-directory property.
+~#~
+DBNETWORKPATH
+Syntax:
+DBNETWORKPATH start-net-address end-net-address [OID | COMPACT]
+start-net-address = the starting network address in the database
+end-net-address = the ending network address in the database
+Description:
+Finds a network path between two networks representation in the project
+  database, via bridge devices.
+It is assumed that the standard bridge and network addresssing convention is
+  used:  the unit address of a bridge device is the same as the network
+  address on the far side of the bridge device. A path longer than 6 bridges
+  will not be returned.
+With the OID option given, a series of OIDs are given for all the networks
+  in the path, including the ending network, but not the source network in one
+  or more 137 responses.
+With the COMPACT option given, a compact bridge path hex string is returned
+  in a single 136 response.
+The OID option is the default if no option is given
+~#~
+DBNEW
+Syntax:
+DBNEW
+Description:
+Clears the tag database for the currrent project and creates a new blank
+  database.
+This blank database contains nothing more than an Installation element, so
+  additional information has be to added before the database is valid to the
+  tag database specification.
+~#~
+DBRENAMENET
+Syntax:
+DBRENAMENET db-net-address new-net-address
+db-net-address = the database address of a <Network> stored in the project
+  database.
+new-net-address = the parent element to hold the copied part of the database
+Description:
+Re-addresses a <Network> in the project database, and additionally ensures
+  that and other <Networks> that are of the bridge type have any references to
+  the old network corrected to support the new network.  Re-addressing means
+  that the network's <Address> element is given a new value.
+Warning:  This command does not prevent you from re-addressing a network to
+  be the same address as another existing network.  This could be confusing if
+  used with reckless abandon.
+~#~
+DBRENAMENETSAFE
+Syntax:
+DBRENAMENETSAFE db-net-address new-net-address
+db-net-address = the database address of a <Network> stored in the project
+  database.
+new-net-address = the parent element to hold the copied part of the database
+Description:
+Re-addresses a <Network> in the project database, and additionally ensures
+  that and other <Networks> that are of the bridge type have any references to
+  the old network corrected to support the new network.  Re-addressing means
+  that the network's <Address> element is given a new value.
+There are some business rules check before renaming the network and the
+  ruels are:
+- db-net-address and new-net-address must be string representations of
+  decimal number (i.e. only 0~9 is allowed)
+- new-net-address can not be the same as db-net-address 
+- new-net-address must be within the range of [0, 255] 
+- new-net-address can not be the same as the address of an existing network
+  in the same project
+~#~
+DBSAVE
+Syntax:
+DBSAVE filename
+Description:
+Saves the current Tag database to the file or URL specified.  The current
+  tag database will be saved in the given filename.
+The filename extension determines how the file will be saved:
+- If the extension given is .zip the tag database is saved in a zip archive.
+   The tag database is saved in the archive as an entry called 'tagdb.xml' and
+  is the only entry in the archive.
+- If the extension given is .gz the tag database will be compressed using
+  GZIP.
+Otherwise, the file is saved in XML format.  The files will only be saved
+  with an extension of .xml if this is given in the filename.
+~#~
+DBSET
+Syntax:
+DBSET parameter-address value
+parameter-address = address of a tag database element or a C-Gate object
+  address
+value = the value to set the parameter to. This includes all characters to
+  the end of the line.
+Description:
+Sets a tag database field by address.
+~#~
+DBSETSAFE
+Syntax:
+DBSET parameter-address value
+parameter-address = address of a tag database element or a C-Gate object
+  address
+value = the value to set the parameter to. This includes all characters to
+  the end of the line.
+Description:
+Sets a tag database field by address and apply business rules check.
+The rules are:
+- if the field to be set is Address and the object to be set is Network,
+  Unit, Application, Group or Level, the value must be the string
+  representation of decimal number (i.e. only 0~9 is allowed) and the value
+  must be within the range of [0, 255]
+- if the field to be set is Address, the value can not be the same as the
+  address of an existing object under the same parent
+- if the field to be set is TagName, the value can not be blank 
+- if the field to be set is TagName, the value can not be the same as the
+  tag name of an existing object under the same parent
+~#~
+DBSETXML
+Syntax:
+DBSETXML db-address << end-tag
+Description:
+Sets a part of the current Tag Database as a snippet of XML given after the
+  command issued. The db-address given is any object in the XML database, and
+  can be specified as either a path from the base of the tag database (ie
+  /Installation/InstallationDetail/Installer), a C-Bus network address, a tag
+  name or OID.
+The XML required for this command is provided as a here document, meaning is
+  it provided in one or more lines following the command, with the command
+  terminated by the end-tag given on the command lien after the << characters,
+  on a line by itself.
+This command returns:
+- a 301 OID= message if the XML setting succeeds. The OID returned is the
+  OID given to the newly-created element that results from the XML setting
+  operation on the database.
+- one or more errors if other conditions occur.
+~#~
+DBTAGLIST
+Syntax:
+DBTAGLIST [pattern]
+pattern = substring to match the tagnames against
+If not given, all tag names are listed.
+Description:
+Lists tag names and their associated objects.
+~#~
+DBUPDATE
+Syntax:
+DBUPDATE network-address [unit-delete]
+network-address = a C-Gate or Tag database address that resolves to a
+  network or a unit
+unit-delete = If this parameter is provided and set to the word
+  "UnitDelete", then any units that are present in the database but are not
+  present in the phyisical network will be deleted from the database.
+Description:
+Updates the current database with the current physical network or unit
+  configuration. This overwrites the current networks.
+~#~
+DBVERIFY
+Syntax:
+DBVERIFY
+Description:
+Verifies the current network against the current database and reports
+  differences.  DBVERIFY compares the live networks that C-Gate is connected
+  with and entries in the tag database in order to detect differences or
+  omissions. These are reported as a series of 345 responses.
+~#~
+DO
+Syntax:
+DO object-identifier method-name *(method-parameter)
+method-parameter = token
+Description:
+Calls the methods of an object.
+A 202 Done response is returned.
+The method may return one or more lines of 120 response that are information
+  relating to this execution of the method.
+Note that the ON, OFF and RAMP commands are shorthand versions of DO
+  commands with the methods on off and ramp.
+~#~
+ENABLE
+Syntax:
+ENABLE [?]
+Description:
+Lists the ENABLE sub-commands:
+ENABLE LABEL - Set labels on devices that support dynamic labels
+ENABLE REMOVE - Remove any reference to this network variable
+ENABLE SET - Set an enable variable to the given value
+~#~
+ENABLE LABEL
+Syntax:
+ENABLE LABEL app language group-number action-sel [variant] options
+app = application address (normally //proj/net/$CB)
+language =  language code (0..255)
+group-number = relevant C-Bus group number (0..255)
+action-sel = action selector | "-"  (dash indicates unset)
+variant = F0 | F1 | F2 | F3 (sets the variant for this label)
+options = ( "text" text-label ) |
+          ( "icon" icon-selector ) |
+          ( "dynamic" icon-selector icon-width icon-height vertical-offset
+  dynamic-icon ) |
+          ( "set_language") |
+          options-byte hex-bytes
+text-label = ASCII text to end of line to be used as label
+icon-selector = numeric icon selection in the range 0 through 65535
+icon-width = width of the icon in pixels
+icon-height = height of the icon in pixels
+dynamic-icon = block of ASCII-encoded bytes representing the icon, as 16
+  lines of up to 62 bits, encoded as up to
+16 characters of HEX, with each block separated by a colon character.
+If a block is less than 16 characters, the block will be zero-filled on the
+  right. For example:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644
+options-byte = integer in the range of 0 through 255, used as the value of
+  the options 1 byte in the command.
+hex-bytes = a string of hex bytes to follow the command
+Note: all numeric values except for dynamic-icon can be entered as decimal,
+  0x or $ prefixed hex, or 0b prefixed binary.
+Description:
+Performs label setting with devices that support dynamic labels.
+~#~
+ENABLE REMOVE
+Syntax:
+ENABLE REMOVE enable-netvar-address
+Description:
+Removes any memory that the server has of this enable network variable.
+  This means that the network variable is removed, and any on-disk storage of
+  the value of the network variable is also removed.
+~#~
+ENABLE SET
+Syntax:
+ENABLE SET enable-netvar-address value ["force"]
+value = integer in the range 0..255 | percentage value (0..100) followed by
+  the % sign | level tag
+Description:
+Sends an enable set message to the network to set the enable network
+  variable given as enable-netvar-address, to the value given. This is
+  equivalent to a LIGHTING RAMP immediate command for the lighting
+  application.
+Value is either: an integer in the range 0..255; or a percentage value
+  (0..100) followed by the % sign;  or a level tag.
+Specifying the optional parameter force, will allow  the command to be sent
+  regardless of network state.
+~#~
+EREPORT
+Syntax:
+EREPORT [?]
+Description:
+Gives an overview of the EREPORT sub-commands:
+EREPORT MESSAGE  - Send an error reporting event with choice of headers
+~#~
+EREPORT MESSAGE
+Syntax:
+EREPORT MESSAGE app type category most-recent acknowledged most-severe
+  severity unit-id [<data-byte-1 [data-byte-2]]
+app = application address (net/$CE)
+type = type of message (RECENT | ERROR_REPORT | ACK | CLEAR | 0..255)
+category = error category number (0..1023)
+most-recent = true if the error is the most recent (y | n | 1 | 0)
+acknowledged = true when the error has been acknowledged (y | n | 1 | 0)
+most-severe = true if the error is the most severe to date (y | n | 1 | 0)
+severity = severity level (0..4)
+unit-id = address of the error monitoring device (0..255)
+data-byte-1 = optional byte containing category specific meaning (0..255)
+data-byte-2 = optional byte containing category specific meaning (0..255)
+- severity level: 0 = ALL_OK; 1 = OK; 2 = minor failure; 3 = general
+  failure; 4 = extreme failure
+Description:
+Sends an error report to the network using the Error Reporting Application.
+Note that EREPORT MESSAGE does not yet implement any of the error-reporting
+  constraints enforced by some of the devices - it will allow you to send
+  messages that are syntactically incorrect. This allows it to be more
+  flexible during the transition to a new error reporting protocol.
+Messages received with an $05 or $15 header will continue to produce the old
+  status change message, unchanged. However, they will no longer produce a
+  level 8 event message.
+~#~
+EVENT
+Syntax:
+EVENT ON | OFF | event-mode
+event-mode = "e" (IDIGIT | '+' ) "s" DIGIT "c" DIGIT
+Description:
+Controls the output of events, status change and config change information
+  to the command session that the command is executed in.
+EVENT ON will  turn on the output of events only with no prefix on each
+  event.  This is the same as event-mode e+s0c0.
+EVENT OFF disables event output. This is equivalent to setting an event-mode
+  of e0s0c0.
+(Can also use the command EVENTS.)
+Event Modes:
+Giving an event-mode expression can give find grained control of event
+  output.  An even mode is made up of a set of  identifiers and an event level
+  for each identifier.
+For events, the identifer is: e and valid event levels are + and 0 through
+  9.  In this case, the event level  indicates the maximum level of events
+  that will be displayed. When these events are delivered, they show a prefix
+  of #e#.  The '+' level is a special code to indicate that no prefix is to be
+  used and the default event level of C-Gate object are used.
+For  status change events, the identifier is s and valid events levels are 0
+  and 1 corresponding to disabled and enabled.  When these events are
+  delivered, they are prefixed with #s#.
+For  config change events, the identifier is c and valid events levels are 0
+  and 1 corresponding to disabled and enabled.When these events are delivered,
+  they are prefixed with #c#.
+Console
+The console is opened in event mode e+s0c0.  This can also be changed by
+  command.
+~#~
+GET
+Syntax:
+GET object-identifier [parameter | ? | * | ??]
+Description:
+Retrieves the values of objects.  Object parameters may be viewed by naming
+  them in the command.
+The special parameter '?' returns a list of all parameters of this object.
+  The special parameter * returns a list of all parameter values for an
+  object. The special parameter ?? returns one line for each parameter with a
+  desciption of the parameter.
+(Can also use the SHOW command.)
+~#~
+GETSTATE
+Syntax:
+GETSTATE (network-address | cgroup-name)
+Description:
+Causes a series of events to be sent to the event stream, that gives the
+  current status of a connected network. Events are returned for all devices
+  in the network.  Events are returned giving:
+- status information for all units and groups 
+- level information for all groups and terminals
+This command is an easy way for an application to get the current state of
+  the network as a starting point for a model or for subsequent event tracking
+  or polling.
+~#~
+HELP
+Syntax:
+HELP [command-or-topic]
+Access Level
+Monitor
+Description:
+Gives brief command-line help.  Note that the help command will only give
+  help for commands that are accessible by the access level of the current
+  user.
+HELP * returns a list of all the commands.
+?  can be used as an abbreviation of HELP.
+~#~
+DBCREATE
+Syntax:
+DBCREATE
+Description:
+Generates a tag database that represents the current connected C-Bus
+  networks & C-Gate implementation.  This replaces the current tag database.
+So, to capture the state of the network and store it, perform a DBCREATE
+  then a DBSAVE  command to save the database to disk.
+This command creates a new database, which fills in compulsory elements with
+  the string [default] where no value can be determined from the network or
+  system.
+~#~
+DBVALIDATE
+Syntax:
+DBVALIDATE db-address
+Description:
+Validates the section of the current tag database given by the address,
+  checking that it conforms to the tag specification. This validations check
+  that required fields are filled in correctly and that there are no
+  violations of the tag specification.
+~#~
+LIGHTING
+Syntax:
+LIGHTING [?]
+Description:
+Lists the LIGHTING sub-commands:
+LIGHTING LABEL - Sets labels on devices that support dynamic labels.
+LIGHTING OFF - Turns off a specified group.
+LIGHTING ON - Turns on a specified group.
+LIGHTING RAMP - Ramps a group to a % level using a specified ramp time.
+LIGHTING TERMINATERAMP - Stops any ramping operation for a given group.
+~#~
+LIGHTING LABEL
+Syntax:
+LIGHTING LABEL app language group-number action-sel [variant] options
+app = application address (normally //proj/net/$38)
+language =  language code (range 0 through 255)
+group-number = relevant C-Bus group number (range 0 through 255)
+action-sel = action selector | "-"  (dash indicates unset)
+variant = F0 | F1 | F2 | F3 (sets the variant for this label)
+options = ( "text" text-label ) |
+          ( "icon" icon-selector ) |
+          ( "dynamic" icon-selector icon-width icon-height vertical-offset
+  dynamic-icon ) |
+          ( "set_language") |
+          options-byte hex-bytes
+text-label = ASCII text to end of line to be used as label, and its maximum
+  length is 14 characters
+icon-selector = numeric icon selection in the range 0 through 65535
+icon-width = width of the icon in pixels
+icon-height = height of the icon in pixels
+dynamic-icon = block of ASCII-encoded bytes representing the icon, as 16
+  lines of up to 62 bits, encoded as up to
+16 characters of HEX, with each block separated by a colon character.
+If a block is less than 16 characters, the block will be zero-filled on the
+  right. For example:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644
+options-byte = ; integer in the range of 0 through 255, used as the value of
+  the options 1 byte in the command.
+hex-bytes = ; a string of hex bytes to follow the command, and its maximum
+  length is 14 characters (i.e. 28 hex byte characters in the command)
+Note: all numeric values except for dynamic icon can be entered as decimal,
+  0x or $ prefixed hex, or 0b prefixed binary.
+Description:
+Sets labels on devices that support dynamic labels.
+Note: For devices that support unicode dynamic labels, if a group/variant
+  already has a unicode label it will not accept text labels sent with this
+  command.  To set or clear unicode labels see the LIGHTING UNICODELABEL
+  command.
+~#~
+LIGHTING UNICODELABEL
+Syntax:
+LIGHTING UNICODELABEL app language group-number action-sel variant option
+  text-label|hex-bytes
+app = application address (normally //proj/net/$38)
+language =  language code (range 0 through 255)
+group-number = relevant C-Bus group number (range 0 through 255)
+action-sel = action selector | "-"  (dash indicates unset) (should always be
+  dash)
+variant = F0 | F1 | F2 | F3 (sets the variant for this label)
+option = ( "text" text-label ) |
+         ( "raw" hex bytes string encoded in UTF-8 )
+text-label = ASCII text to end of line to be used as label if option = text
+hex-bytes =  a string of hex bytes to follow the command if option = raw
+Description:
+Sets unicode labels on devices that support unicode dynamic labels. The
+  label string should be encoded in UTF-8.
+To clear a unicode label simply provide no parameter for text-label or
+  hex-bytes.
+Note: Please use the raw option to send unicode characters to C-Gate. Using
+  the text option to send unicode may not always work.
+~#~
+LOCK
+Syntax:
+LOCK object-identifier
+Description:
+Sets an advisory lock on an object.  This lock is typically used by
+  cooperating applications that want exclusive access to a device or object
+  for programming of configuration. A lock survives until unlocked with the
+  UNLOCK command or the command session ends.
+Note that the locking is advisory only.  Applications must cooperate to make
+  a locking system work.
+~#~
+LOGIN
+Syntax:
+LOGIN [username password]
+username = user name
+password = user password
+Description:
+Changes the current access level of this command session, by providing a
+  username and a password.
+If no username and password are given, the command returns the current
+  access level.
+Usernames and passwords are case-sensitive.
+~#~
+LOGOUT
+Syntax:
+LOGOUT
+Description:
+Logs out of the current access level of this command session.
+If a user hasn't logged in, just reports the current access level.
+~#~
+MEASUREMENT
+Syntax:
+MEASUREMENT [?]
+Description:
+Lists the MEASUREMENT sub-commands:
+MEASUREMENT DATA - Measurement data for a Channel.
+~#~
+MEASUREMENT DATA
+Syntax:
+MEASUREMENT DATA channel value multiplier units
+channel = channel address (eg //proj/net/$E4/1/1)
+value = scaled measurement value (-32768..32767)
+multiplier = power of ten unit multiplier (-128..127)
+units = measurement units (0..$FF)
+For valid units values see the Unit Code Table.
+Description:
+Measurement Data Messages are sent by a Measurement Device either:
+(a) based on an elapsed time interval,
+(b) based on a change in the measured value, or
+(c) in response to a specific Control Trigger application request
+~#~
+MEDIATRANSPORT
+Syntax:
+MEDIATRANSPORT [?]
+Description:
+Lists the MEDIATRANSPORT sub-commands:
+MEDIATRANSPORT CATEGORY_NAME - Sets the category name.
+MEDIATRANSPORT ENUMERATE - Request up to 16 names for a category, selection
+  or track.
+MEDIATRANSPORT ENUMERATION_SIZE - Indicates the number of items in an
+  enumeration.
+MEDIATRANSPORT FORWARD - Fast-forwards the current track.
+MEDIATRANSPORT NEXT_CATEGORY - Changes to the next category.
+MEDIATRANSPORT NEXT_SELECTION - Changes to the next selection.
+MEDIATRANSPORT NEXT_TRACK - Changes to the next track.
+MEDIATRANSPORT PAUSE - Pauses/unpauses playing.
+MEDIATRANSPORT PLAY - Starts playing.
+MEDIATRANSPORT REPEAT - Sets state to 'repeat'.
+MEDIATRANSPORT REWIND - Rewinds the current track.
+MEDIATRANSPORT SELECTION_NAME - Sets a selection name.
+MEDIATRANSPORT SET_CATEGORY - Chooses a category.
+MEDIATRANSPORT SET_SELECTION - Chooses a selection.
+MEDIATRANSPORT SET_TRACK - Chooses a track.
+MEDIATRANSPORT SHUFFLE - Sets state to 'shuffle'.
+MEDIATRANSPORT SOURCE_POWER - Turns on/off the output unit.
+MEDIATRANSPORT STATUS_REQUEST - Requests current status of an output unit.
+MEDIATRANSPORT STOP - Stops play.
+MEDIATRANSPORT TOTAL_TRACKS - Indicates how many tracks are available
+MEDIATRANSPORT TRACK_NAME - Sets the track name.
+~#~
+MEDIATRANSPORT CATEGORY_NAME
+Syntax:
+MEDIATRANSPORT CATEGORY_NAME app group wni total index text
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+wni = name identification (0..7)
+   0 = current category
+   1 = next category
+   2 = next+1 category
+   3,4 = reserved
+   5 = previous category
+   6 = previous-1 category
+   7 = enumerated category
+total = total number of packets - 1 (0..3)
+index = index/sequence of this packet (0..3)
+text = all/part of the category name in UTF-8 (max 11 bytes per packet)
+Description:
+Sets the name of a category in the output unit in the given media link group.
+The name is constructed from one or more packets, sent in sequence, coded as
+  UTF-8, limited to 40 bytes total length.
+~#~
+MEDIATRANSPORT FORWARD
+Syntax:
+MEDIATRANSPORT FORWARD app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0..$FF):
+   0 = cease fast-forward, play at normal speed
+   2 = fast-forward at 2x speed
+   4 = fast-forward at 4x speed
+   6 = fast-forward at 8x speed
+   8 = fast-forward at 16x speed
+  10 = fast-forward at 32x speed
+  12 = fast-forward at 64x speed
+  all other values reserved
+Description:
+Requests that the track currently being played in the given media link group
+  be fast-forwarded.
+Continues to be in effect until a PLAY, FORWARD 0 or REWIND command is
+  received.
+If the output unit is not in the play state, the command is ignored.
+~#~
+MEDIATRANSPORT NEXT_CATEGORY
+Syntax:
+MEDIATRANSPORT NEXT_CATEGORY app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0..$FF):
+   0 = select previous category
+   non-0 = select next category
+Description:
+Requests that the output unit in the given media link group change to the
+  next or previous category.
+~#~
+MEDIATRANSPORT NEXT_SELECTION
+Syntax:
+MEDIATRANSPORT NEXT_SELECTION app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0..$FF):
+   0 = select previous selection
+   non-0 = select next selection
+Description:
+Requests that the output unit in the given media link group change to the
+  next or previous selection.
+~#~
+MEDIATRANSPORT NEXT_TRACK
+Syntax:
+MEDIATRANSPORT NEXT_TRACK app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0..$FF):
+   0 = select previous track
+   non-0 = select next track
+Description:
+Requests that the output unit in the given media link group change to the
+  next or previous track.
+~#~
+MEDIATRANSPORT PAUSE
+Syntax:
+MEDIATRANSPORT PAUSE app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0,$FF):
+   0 = pause track
+   255 = resume playing track
+   other values reserved
+Description:
+Requests that the output unit in the given media link group pause or resume
+  the current track.
+If the unit is in the stopped or paused state, a pause operation is ignored.
+If the unit is in the stopped or playing state, a resume operation is ignored.
+~#~
+MEDIATRANSPORT PLAY
+Syntax:
+MEDIATRANSPORT PLAY app group
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+Description:
+Requests that the output unit in the given media link group play tracks from
+  the current selection.
+If the output unit is in the stopped state, play begins from the first track
+  in the selection.  (This may be randomised if the SHUFFLE modifier is
+  active.)
+If the output unit is in the paused state, playing resumes from where it was
+  paused.
+If the output unit is in the playing state, the command has no effect other
+  than turning off any fast-forward state activated.
+~#~
+MEDIATRANSPORT REPEAT
+Syntax:
+MEDIATRANSPORT REPEAT app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0,$FF):
+   0 = repeat is off
+   1..254 = repeat current track
+   255 = repeat all tracks
+Description:
+Sets the repeat modifier of the given media link group.
+The repeat modifier can be changed at any time.
+~#~
+MEDIATRANSPORT REWIND
+Syntax:
+MEDIATRANSPORT REWIND app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0,$FF):
+   0 = cease rewind, play at normal speed
+   2 = rewind at 2x speed
+   4 = rewind at 4x speed
+   6 = rewind at 8x speed
+   8 = rewind at 16x speed
+  10 = rewind at 32x speed
+  12 = rewind at 64x speed
+  all other values reserved
+Description:
+Requests that the track currently being played in the given media link group
+  be played in reverse.
+Continues to be in effect until a PLAY, FORWARD 0 or another REWIND command
+  is received.
+If the output unit is not in the play state, the command is ignored.
+~#~
+MEDIATRANSPORT SELECTION_NAME
+Syntax:
+MEDIATRANSPORT SELECTION_NAME app group wni total index text
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+wni = name identification (0..7)
+   0 = current selection
+   1 = next selection
+   2 = next+1 selection
+   3,4 = reserved
+   5 = previous selection
+   6 = previous-1 selection
+   7 = enumerated selection
+total = total number of packets - 1 (0..3)
+index = index/sequence of this packet (0..3)
+text = all/part of the selection name in UTF-8 (max 11 bytes per packet)
+Description:
+Sets the name of a selection in the output unit in the given media link group.
+The name is constructed from one or more packets, sent in sequence, coded as
+  UTF-8, limited to 40 bytes total length.
+~#~
+MEDIATRANSPORT SET_CATEGORY
+Syntax:
+MEDIATRANSPORT SET_CATEGORY app group category-number
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+category-number = category to select (0..127)
+(the meaning of this depends on the output unit)
+Description:
+Requests that the given category-number be used by the given media link
+  group's output unit.
+If the given category-number doesn't exist, no action is taken.
+~#~
+MEDIATRANSPORT SET_SELECTION
+Syntax:
+MEDIATRANSPORT SET_SELECTION app group selection-number
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+selection-number = selection number to select
+Description:
+Requests that the selection-number used by the given media link group be
+  changed to that specified.
+If the given selection-number doesn't exist in the active category, then the
+  active selection isn't changed.
+~#~
+MEDIATRANSPORT SET_TRACK
+Syntax:
+MEDIATRANSPORT SET_TRACK app group track-number
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+track-number = track to select (0..$FFFF)
+(the meaning of this depends on the output unit)
+Description:
+Requests that the given track-number be played by the given media link
+  group's output unit.
+If the given track-number doesn't exist in the active selection, no action
+  is taken.
+~#~
+MEDIATRANSPORT SHUFFLE
+Syntax:
+MEDIATRANSPORT SHUFFLE app group operation
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+operation = one of (0,$FF):
+   0 = shuffle is off
+   255 = shuffle is on
+   1..254 = reserved
+Description:
+Sets the shuffle modifier of the given media link group.
+The shuffle modifier can be changed at any time.
+~#~
+MEDIATRANSPORT SOURCE_POWER
+Syntax:
+MEDIATRANSPORT SOURCE_POWER app group state
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+state = one of 0 or 1..255
+   0 = power off
+   not 0 = power on
+Description:
+Turns on or off, the output unit in the given media link group.
+If the unit doesn't have power-control ability, this command is ignored.
+~#~
+MEDIATRANSPORT STATUS_REQUEST
+Syntax:
+MEDIATRANSPORT STATUS_REQUEST app group
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+Description:
+Requests current status of the output unit in the given media link group.
+~#~
+MEDIATRANSPORT ENUMERATE
+Syntax:
+MEDIATRANSPORT ENUMERATE app group type start
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+type = enumeration type where 0=category, 1=selection, 2=track
+start = enumerate from this index (0..$FF)
+Description:
+Requests a dump of the names of the first 16 categories, selections or
+  tracks in the given media link group.
+~#~
+MEDIATRANSPORT ENUMERATION_SIZE
+Syntax:
+MEDIATRANSPORT ENUMERATION_SIZE app group type start size
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+type = enumeration type where 0=category, 1=selection, 2=track
+start = enumerate from this index (0..$FF)
+size = number of items in the enumeration following (0..$0F)
+Description:
+Describes the number of entries the unit is about to send in response to an
+  enumeration request on the given media link group.
+~#~
+MEDIATRANSPORT STOP
+Syntax:
+MEDIATRANSPORT STOP app group
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+Description:
+Requests that the output unit in the given media link group stop playing.
+If the unit is already in the stopped state, this command is ignored.
+~#~
+MEDIATRANSPORT TOTAL_TRACKS
+Syntax:
+MEDIATRANSPORT TOTAL_TRACKS app group tracks
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+tracks = number of tracks (0..$FFFF)
+Description:
+An output unit on the Media Link Group is describing how many tracks are
+  available in the currently selected category and selection
+~#~
+MEDIATRANSPORT TRACK_NAME
+Syntax:
+MEDIATRANSPORT TRACK_NAME app group wni total index text
+app = application address (normally //proj/net/$C0)
+group = media link group (0..$FF, where $FF indicates unused)
+wni = name identification (0..7)
+   0 = current track
+   1 = next track
+   2 = next+1 track
+   3,4 = reserved
+   5 = previous track
+   6 = previous-1 track
+   7 = enumerated track
+total = total number of packets - 1 (0..3)
+index = index/sequence of this packet (0..3)
+text = all/part of the track name in UTF-8 (max 11 bytes per packet)
+Description:
+Sets the name of a track being played by the output unit in the given media
+  link group.
+The name is constructed from one or more packets, sent in sequence, coded as
+  UTF-8, limited to 40 bytes total length.
+~#~
+NET
+Syntax:
+NET [?]
+Description:
+Lists the NET sub-commands:
+NET CHECK_UNRAVEL         - Checks to see if a networks needs to be
+  unravelled.
+NET CLOSE - Closes a network.
+NET CREATE - Defines a C-Bus network to add to the current project.
+NET DELETE - Deletes a network entry by name.
+NET FLUSH - Flushes or deletes the in-memory objects attached to a network.
+NET LEARN - Sends learn-mode commands to a network.
+NET LIST - Returns a list of available networks defined in the current
+  project.
+NET LIST_ALL - Returns a list of all networks defined in all projects.
+NET LOAD - Loads network definitions for the current project.
+NET OPEN - Opens a network.
+NET PINGU - Performs a single MMI to get a list of units from the network.
+NET PROJECT_IDENTIFY - Returns the project name of the C-Bus network
+  attached to the specified interface.
+NET RENAME - Re-addresses a network, giving it a new name and address.
+NET SAVE - Saves the current network configuration.
+NET SET_PROJECT_IDENTIFY - Stores a project name in a unit on a network.
+NET SYNC - Initiates a network synchronisation operation.
+NET SYNCNEW - Checks a network or a single unit address for any new units.
+NET UNRAVELUNIT - Find all units at the given addresses and move them to
+  unique addresses.
+NET UNRAVEL -  Find all units on the network and where necessary move them
+  to unique addresses.
+~#~
+NET CHECKUNIT
+Syntax:
+NET CHECKUNIT net-address [unit-addresses]
+net-address = address of the network
+unit-addresses = comma delimited sequence of unit addresses, or *
+Description:
+Interrogates unit addresses to determine whether there are single or
+  multiple units at each address.
+This command performs a single MMI followed by parallel queries to all unit
+  addresses in question.  The entire process takes about two seconds to run.
+If the unit-addresses parameter is not provided or is a * wildcard, all
+  occupied addresses in the MMI will be queried.
+Each response line will begin with either "Duplicate units detected",
+  "Single unit detected", "Single unit with error detected", "One or more
+  units detected", "One or more units with error detected" or "No units
+  detected", and then be followed by the text " at address: xxx".
+~#~
+NET CLOCKS
+Syntax:
+NET CLOCKS net-address [target | R]
+net-address = address of the network
+target = the target number of enabled clocks to achieve
+R = a constant to perform an emergency recovery of clock only
+Description:
+This command is used for managing the number of C-Bus clocks enabled on the
+  network.  Not to be confused with the CLOCK commands.
+The command has three different behaviours depending on the target parameter.
+If the target parameter is:
+- not supplied, then the command returns a list of the unit addresses that
+  have C-Bus clock enabled.  This also includes additional information showing
+  the clock generator and the software burdens enabled.
+- an integer, then C-Gate will if needed enable or disable additional clocks
+  in order for the network to reach the target number of clocks enabled.  This
+  may take several seconds.
+- the letter 'R', the command will perform an emergency recovery by enabling
+  clock on the gateway.  This takes less than a second.  Note that C-Gate also
+  has an automatic clock recovery feature that achieves the same outcome.
+In all cases the command requires the network to be open first.
+The standard recommendation is that each C-Bus network should have three (3)
+  clocks enabled.
+WARNING: This command does not take into account network topology.  The best
+  practice is to enable clocks on units located in the physical centre of the
+  network topology and to achieve that you will need to program units
+  individually.  However this command will always attempt to keep existing
+  clocks enabled, so if you have enabled two clocks by hand and you specify a
+  target value of '3', it will preserve the original two enabled clocks and
+  enable one more.
+~#~
+NET CLOSE
+Syntax:
+NET CLOSE net-address
+Description:
+Closes the network given on the command line as net-address.
+~#~
+NET CREATE
+Syntax:
+NET CREATE name type interface-address [options...]
+name = the name of the network to create
+type =  one of the valid network types (serial, cni, etherlite, socket,
+  bridge, modem, wiser)
+interface-address = address for the PORT of this network. (This address
+  depends on the actual type)
+serial = local serial port name (as would be returned by the PORT LIST
+  command, eg COM1)
+cni = IP address with an optional port number preceeded by a ':'. With no
+  port number given, the default CNI port is used.
+socket = IP address, followed by a ':' and a port number
+etherlite = IP address followed by a ':' and a serial port number, where 0
+  is the first port.
+bridge = C-Gate object address for the near-side of the bridge that the
+  network is beyond.
+for wiser it is the same as type cni
+Description:
+Defines a C-Bus network to add to the current project. This creates the
+  network in state new in the current project. This command also will create
+  an entry for this network in the project tag database, if tag databases are
+  being used. An event is sent on the creation of a network by this mechanism.
+  Note: this command does not change or update a networks.txt file -- this
+  requires use of the NET SAVE FILE command.
+~#~
+NET DELETE
+Syntax:
+NET DELETE net-address
+net-address = address of the network to delete
+Description:
+Deletes a network entry by name.
+This command removes the network from the C-Gate server memory.
+An event is sent on the deletion of a network by this mechanism.
+The network must be in InterfaceState closed in order to be deleted.
+~#~
+NET FLUSH
+Syntax:
+NET FLUSH net-address
+net-address = address of the network to flush
+Description:
+Flushes or deletes the in-memory objects attached to this network.  This
+  means that a subsequent NET SYNC operation will start from scratch.   Both
+  Unit objects and Application objects are flushed.
+Note:  this command can only be executed when a sync is not in progress.
+~#~
+NET LEARN
+Syntax:
+NET LEARN net-address app-number grade group
+Description:
+Sends learn-mode commands to the specified network and application, using
+  the given grade and group.
+Grade values are:
+init relay:         0x01
+init dim:                0x02
+cancel:                0x80
+exit relay:        0x81
+exit dim:        0x82
+exit area:        0x83
+~#~
+NET LIST
+Syntax:
+NET LIST [project]
+project = the name of a project
+Description:
+Returns a list of networks defined in the given project.  If no project name
+  is given, then the current project is used.  The current project is
+  determined by the command session that this command is issued in - see the
+  PROJECT USE command for details of setting the current project. All networks
+  in the project are displayed, whether the connections have been opened or
+  not.
+~#~
+NET LIST_ALL
+Syntax:
+NET LIST_ALL
+Description:
+Returns a list of networks from all open projects along with status
+  information about the networks.
+~#~
+NET LOAD
+Syntax:
+NET LOAD DB | FILE [project]
+project = the name of a project
+Description:
+Loads network definitions from the given project into memory, from either
+  the project tag database, or from the networks file for that project.  If no
+  project name is given, then the current project is used.  The current
+  project is determined by the command session that this command is issued in
+  - see the PROJECT USE command for details of setting the current project.
+  This will not over-write any existing definitions of networks held in the
+  C-Gate server memory which have the same names as given in the networks
+  file.
+~#~
+NET OPEN
+Syntax:
+NET OPEN net-address
+Description:
+Opens a network. Opening a network does the following:
+Attempts to open the port address given in the NET CREATE command -- thus
+  initiating a connection to the C-Bus network that is accessed by the port
+Performs an initial synchronisation of the attached network
+Once both these steps are complete, the network State will be ok and the
+  InterfaceState will be running.
+~#~
+NET PINGU
+Syntax:
+NET PINGU net-address
+net-address = address of the network to do a unit ping on
+Description:
+Performs a single quick MMI operation to get a list of units from the
+  network.  A single MMI is issued, and no retries are performed.
+~#~
+NET PROJECT_IDENTIFY
+Syntax:
+NET PROJECT_IDENTIFY interface-address
+interface-address = address of the interface to use, in the form type@address
+Description:
+Returns the project name of the C-Bus network attached to the specified
+  interface.
+~#~
+NET RENAME
+Syntax:
+NET RENAME net-address new-net-address ["nofixrefs"]
+net-address = address of the network to be renamed/readdresses
+new-net-address = new address for the network
+"nofixrefs" prevents the command from changing bridge definitions in other
+  networks in this project to support the new network name.
+Description:
+Re-addresses a network, giving it a new name and address.
+This takes place immediately.
+This command also updates any references to the old network address in any
+  bridge networks unless the optional nofixrefs is given at the end of the
+  command. The network address of the bridge network can only be updated when
+  the network is not open, and if this command fails to update the network
+  address, there will be a message in the response that the network address is
+  not changed.
+Note: This command doesn't affect or rename the database instance.
+~#~
+NET SAVE
+Syntax:
+NET SAVE DB | FILE [project]
+project = the name of a project
+Description:
+Saves the network configuration for the given project to either the project
+  database, or to a networks file appropriate to the project.   If no project
+  name is given, then the current project is used.  The current project is
+  determined by the command session that this command is issued in - see the
+  PROJECT USE command for details of setting the current project. Note: this
+  command does not save a project database to disk -- this is done with the
+  PROJECT SAVE command.
+~#~
+NET SET_PROJECT_IDENTIFY
+Syntax:
+NET SET_PROJECT_IDENTIFY net-address project-name
+net-address = address of the network to be identified
+project-name = new project name, must be no more that 8 characters and
+  conform to the sixbit packing standard
+Description:
+Stores a project name in the appropriate unit on the given network.
+~#~
+NET SYNC
+Syntax:
+NET SYNC net-address ["fast"] [retry-count]
+net-address = address of the network to be synchronised
+retry-count = number of retries for commands during the sync process
+Description:
+Initiates a network synchronisation operation, returning a number of lines
+  of status information as the synchronisation succeeds.  Applications can use
+  this progress information to present progress graphics or show a status
+  screen of some kind if required.
+If the optional parameter 'fast' is given, the sync only completes an MMI,
+  type, version and serial number scan before returning. This gives a quick
+  view of a network.
+If a retry-count is given, then the network's Retries parameter is set to
+  this value for the duration of this command.
+Note: if another sync of the same network is in progress, either a
+  background sync or a sync started by 'NET SYNC' command, the sync command
+  will attach itself to the on going sync and respond with the cached sync
+  outputs in the beginning followed by the remaining outputs as a normal sync
+  operation.
+Note: the background sync is explained in Starting a Project or Network. The
+  background sync is controlled by network's AutoSync property which should
+  always be set to yes as explained in Starting a Project or Network. It is
+  not necessary to turn off AutoSync for C-Bus Toolkit, Schedule Plus and
+  other C-Gate clients to work properly. Network's NextSyncTime property
+  indicates when the next scheduled automatic background sync will be
+  executed.
+~#~
+NET SYNCNEW
+Syntax:
+NET SYNCNEW net-address [unit-number]
+net-address = address of the network to do a syncnew operation on
+unit-number = (optional) specific unit address to check
+Description:
+Checks a network or a single unit address to see if there are any new units.
+If no unit number is given, the command checks for any new units on the
+  network and if they are found, returns the type, version and serial number
+  for the units.
+If a unit number is given, the command check for a new unit at that address,
+  also checking to see if any duplicate units are found at that address.
+~#~
+NET UNRAVEL
+Syntax:
+NET UNRAVEL net-address [matchdb]
+net-address = address of the network
+matchdb = if specified, units will be moved to their database addresses
+  where possible
+Description:
+Performs a series of operations on a network to find all units and where
+  necessary move them to unique addresses.  This is a necessary operation to
+  commission a C-Bus network, as all units invariably come from the factory
+  set to address 255.
+The unravel process will:
+- Perform an MMI to find occupied addresses.
+- Interrogate the gateway unit and ensure no other units are at that address.
+- If the gateway unit is a bridge, move it to the correct address matching
+  the near side network.
+- Interrogate each remaining unit address.  If duplicates are found, they
+  will be moved to unique addresses.
+- If 'matchdb' is specified and a matching unit is found in the database,
+  ensure the unit ends up at that address.
+- Leave one unit at each originally occupied address.  This ensures an
+  already unravelled network will not change if it is unravelled again.
+- Move all other units to vacant  addresses starting at 2 and increasing.
+- Cope with old units without serial numbers (though it will proceed slowly
+  at these addresses).
+Typical responses are:
+120-completed MMI 1 of 1.
+120-Unravel: Unit count: <count>
+120-Unravel: Units at: <comma delimited addresses>
+120-Unravel: Unravelling gateway units...
+120-Unravel: Top unit was sent to <address> (<hex-address>).
+120-Unravel: Restored top unit to address <address> (<hex-address>).
+120-Unravel: Scanning unit <no> of <count> at <address> (<hex-address>).
+120-Unravel: Unit at address <address> (<hex-address>) with serial number
+  <serial> moved to address <address> (<hex-address>).
+120-Unravel: Unit at address <address> (<hex-address>) moved to address
+  <address> (<hex-address>).
+120-Unravel: Last unit at address <address> (<hex-address>) with serial
+  number <serial> left in place.
+120-Unravel: Complete.
+120-Unravel: Updating network model at address <address> (<hex-address>)
+200 OK.
+Note that there is also a NET UNRAVELUNIT command that allows you to specify
+  a subset of addresses to be unravelled.
+~#~
+NET UNRAVELUNIT
+Syntax:
+NET UNRAVEL net-address unit-addresses [matchdb]
+net-address = address of the network
+unit-addresses = comma delimited sequence of unit addresses, or *
+matchdb = if specified, units will be moved to their database addresses
+  where possible
+Description:
+Performs a series of operations on a network to find all units at the given
+  address or addresses and where necessary move them to unique addresses.
+This is similar to the NET UNRAVEL command but only affects the addresses
+  given.  Please see the help for that command for more information about the
+  unravelling process.
+~#~
+NETWORK
+Syntax:
+NETWORK [?]
+Description:
+Lists the NETWORK sub-commands:
+NETWORK LOCATE - Sends a locate-yourself message to the matched units.
+~#~
+NETWORK LOCATE
+Syntax:
+NETWORK LOCATE app options mode
+app = application address for this application, normally net/$d0
+options = ( "unit" address ) - locate unit address
+    | ( "app" address )  - locate units in application
+    | ( "group" app group-address ) - locate units using group
+    | ( "serial" manufacturer serial-number - locate using serial &
+  manufacturer
+mode = "on" | "off" | integer in range 0-255
+Description:
+Sends a locate-yourself message to the matched units.  This puts the unit
+  into a commissioning mode.
+~#~
+NEW
+Syntax:
+Defining a group:
+NEW object-type object-id param
+object-type = "UNIT" | "GROUP" | "PHANTOM"
+object-id = a network, group, unit or system entity
+param = a parameter appropriate to the object type
+Description:
+Creates a new object.  The new object is created in state new.
+~#~
+NOOP
+Syntax:
+NOOP
+Description:
+Results in a 200 OK reply message with no additional details if the
+  interface is working. Designed to allow simple verification that the
+  interface is operating correctly. A 500 Internal error can only occur when
+  the server has a serious internal error.  If no response is received to a
+  NOOP command, then the current command session is not responding. This may
+  be due to the fact that this command interface is still processing an
+  existing command.
+~#~
+OFF
+Syntax:
+OFF object-identifier ["force"]
+Description:
+Turns off the specified group.  This command sends a C-Bus group OFF command
+  to the appropriate network.
+Specifying the optional parameter force allows  the command to be sent even
+  if the group is not in an ok state.
+~#~
+OID
+Syntax:
+OID
+Description:
+Generates an Object ID.  Object IDs are unique, and are based on underlying
+  hardware depending on OS support.
+~#~
+ON
+Syntax:
+ON object-identifier ["force"]
+Description:
+Turns on the specified group.  This command sends a C-Bus group ON command
+  to the appropriate network.
+Specifying the optional parameter force, allows  the command to be sent even
+  if the group is not in an ok state.
+~#~
+PORT
+Syntax:
+PORT [?]
+Description:
+Lists the PORT sub-commands:
+PORT CNISCAN - Lists the CNIs found on a network.
+PORT IFLIST - Lists the IP network interfaces available on this server.
+PORT LIST - Lists available ports that might be connected to a C-Bus PCI.
+PORT PROBE - Probes a port to locate responding PCIs.
+PORT REFRESH - Refreshes the known local serial ports.
+~#~
+PORT CNISCAN
+Syntax:
+PORT CNISCAN [ip-address] ["fast"]
+ip-address = (optional) An IP range to scan for CNI devices.  If not given,
+  all networks connected to the server will be scanned for CNI devices.
+If "fast" is given, don't attempt to connect to each CNI.
+Description:
+Scans a network looking for CNIs.  A list of found CNIs will be returned.
+  For a CNI to response to this command and thus be detected, it must not have
+  network configuration disabled, and must have an IP address assigned to it
+  that matches the network being scanned.
+~#~
+PORT CNISCAN2
+Syntax:
+PORT CNISCAN2 [interface-address] [ip-address] ["fast"]
+interface-address = (optional) A network interface on the computer. If not
+  given, defaults to '0.0.0.0' (wildcard) in which case the Java + OS
+  subsystem will try and route packets intelligently through all available
+  interfaces.
+ip-address = (optional) An IP range to scan for CNI devices.  If not given,
+  all networks connected to the server will be scanned for CNI devices.
+If "fast" is given, don't attempt to connect to each CNI.
+Examples
+// invalid adapter
+port cniscan2 1.1.1.1
+408 Operation failed: scan failed: Can not send to network: Cannot assign
+  requested address: Cannot bind
+// selected adapter
+port cniscan2 10.176.60.37
+129-ip-address=10.176.148.27 status=unknown port=10001 type=CNI
+129-ip-address=10.176.61.60 status=available port=10001 type=CNI2
+  mac=00:17:DD:01:0E:33 serial=00100700.3526 cbus-unit-address=37
+129-ip-address=192.168.0.10 status=available port=0 type=CNIAC
+  mac=00:17:DD:09:00:17 serial=00000000.0000 cbus-unit-address=0
+129 ip-address=10.176.60.34 status=available port=0 type=CNIAC
+  mac=00:17:DD:09:00:0C serial=00100327.0683 cbus-unit-address=11
+// selected adapter, plus device ip-address filter
+port cniscan2 10.176.60.37 10.176.60.34
+129 ip-address=10.176.60.34 status=available port=0 type=CNIAC
+  mac=00:17:DD:09:00:0C serial=00100327.0683 cbus-unit-address=11
+// wildcard with device ip-address filter
+port cniscan2 0.0.0.0 10.176.60.34
+129 ip-address=10.176.60.34 status=available port=0 type=CNIAC
+  mac=00:17:DD:09:00:0C serial=00100327.0683 cbus-unit-address=11
+Description:
+Scans a network looking for CNIs.  A list of found CNIs will be returned.
+  For a CNI to response to this command and thus be detected, it must not have
+  network configuration disabled, and must have an IP address assigned to it
+  that matches the network being scanned.
+~#~
+PORT IFLIST
+Syntax:
+PORT IFLIST
+Description:
+Returns a list of IP network interfaces available on this server. Will
+  return a list of all the IP addresses that this host responds to, so this is
+  principally used to work out the IP interfaces on a server to make scanning
+  for CNIs easier.
+Note: the loopback interface (127.0.0.1) will not show up in the list of
+  interfaces.
+~#~
+PORT LIST
+Syntax:
+PORT LIST
+Description:
+Returns a list of available ports that might be connected to a C-Bus PCI.
+  The list of ports returned is restricted to local serial ports or network
+  ports that use port-redirectors to appear as a local serial port.
+~#~
+PORT PROBE
+Syntax:
+PORT PROBE type address
+type = The type of device to probe. This can be the string: serial or
+  socket, cni, wiser or etherlite. (Case is not significant)
+address = The address to probe.
+This address depends on the type above:
+for type serial, the address is a local serial port name (as would be
+  returned by the PORT LIST command).
+for type cni, the address is an IP address with an optional port number
+  preceeded by a ':'. With no port number given, the default CNI port is used.
+for type wiser, it is the same as type cni
+for type socket, the address is an IP address, followed by a ':' and a port
+  number
+for type etherlite, the address is an IP address followed by a ':' and a
+  serial port number, where 0 is the first port.
+Note: the probe will fail if a cni device is configured to use a password on
+  connection or is configured to not accept connections from the server.
+Description:
+Probes a port attempting to locate an interface to a C-Bus network (a PCI)
+  that is responding.
+This command does the following:
+1.Attempts to opens a connection of the specified type of port at the given
+  address. If a connection can not be opened, the command fails with an error
+  2.If possible, sets appropriate HW flow control pins (necessary for C-Touch
+  in PCI mode) 3.Probes the port for a connected and operating PCI.
+The tests used will attempt to identify all versions of PCI by tests like:
+  Sending ~~<CR> and then checking for an echo response  Sending a CAL command
+  to PCI and check for valid response
+~#~
+PORT REFRESH
+Syntax:
+PORT REFRESH
+Description:
+Refreshes the known local serial ports.
+~#~
+PROJECT
+Syntax:
+PROJECT [?]
+Description:
+Lists the PROJECT sub-commands:
+PROJECT ARCHIVE - Archives a project from the existing project directory to
+  a given filename.
+PROJECT CLOSE - Closes a project.
+PROJECT COPY - Copies a project in the project directory on the server disk.
+PROJECT DELETE - Deletes a project from the project directory on the server
+  disk or at another path.
+PROJECT DIR - Returns a list of available projects.
+PROJECT LIST - Returns a list of all open projects in this C-Gate server.
+PROJECT LOAD - Loads a project from disk into the C-Gate server.
+PROJECT NEW - Creates a new project.
+PROJECT RENAME - Renames a project in the project directory on the server
+  disk.
+PROJECT RESTORE - Restores a project from a given archive file.
+PROJECT SAVE - Saves a project to disk from the C-Gate server.
+PROJECT START - Starts the named or current project.
+PROJECT STOP - Stops the named or current project.
+PROJECT USE - Sets the context of the current command session to the given
+  project name.
+~#~
+PROJECT CLOSE
+Syntax:
+PROJECT CLOSE [project-name]
+project-name = (optional) Name of the project to close. If not given, then
+  the current project name is used.
+Description:
+Closes a project. Closing a project means that it is no longer held in
+  C-Gate server memory, and is thus can no longer be referenced. This command
+  should be used to close projects that are not actively being used to
+  conserve server resources. You can not close a running project, it must be
+  stopped first.
+~#~
+PROJECT COPY
+Syntax:
+PROJECT COPY project-name new-project-name
+project-name = Name of the project that will be copied
+new-project-name = Name that the project will be copied to. new-project-name
+  must be a valid project name and use characters allowed in the server's
+  filesystem.
+Description:
+Copies a project in the project directory on the server disk. Note: this
+  only copies the on-disk project. It has no impact on the current loaded
+  projects in memory.
+~#~
+PROJECT DELETE
+Syntax:
+PROJECT DELETE [project-name]
+Parameters
+project-name = (optional) Name of the project to delete. If not given, the
+  current project is deleted.
+Description:
+Deletes a project from the project directory on the server disk or at
+  another path. A deleted project will have the filename of the project
+  changed (by the addition of ".deleted" to the end of the filename) so that
+  the project will no longer appear in the list given by the PROJECT DIR
+  command. You can undelete a project by removing the ".deleted" from the
+  project filename. Note that you can delete a currently loaded and running
+  project. This will have no impact on the current operation of the project.
+~#~
+PROJECT DIR
+Syntax:
+PROJECT DIR [path]
+path = (optional) Path to the directory on the C-Gate server where the
+  project list is to come from. If a relative path is given, then that path is
+  relative to the C-Gate server's base directory (which, on windows, is
+  normally \Clipsal\C-Gate) on the system drive).
+Description:
+Returns a list of available projects, either from the default project
+  directory, or from the specified path on the C-Gate server computer if an
+  optional path name is given.
+~#~
+PROJECT LIST
+Syntax:
+PROJECT LIST
+Description:
+Returns a list of all open projects in this C-Gate server. An open project
+  is one that has been loaded into server memory either at startup or via the
+  PROJECT LOAD command.
+~#~
+PROJECT LOAD
+Syntax:
+PROJECT LOAD [project-name [file-name]]
+project-name = (optional) name of the project to load. If not specified, the
+  current project is used.
+file-name = (optional) Name of the file the project can be found in. This
+  can only be specified if the project-name is given.
+Description:
+Loads a project from disk into the C-Gate server. This makes the project
+  available to be started, or accesses with DB and other commands.
+~#~
+PROJECT NEW
+Syntax:
+PROJECT NEW project-name
+project-name = Name of the project to create.
+Description:
+Creates a new project with the given name.
+The project is created under the given name and is initialized in the
+  following way:
+- There are no network entries associated with the project  
+- A blank tag database is created and attached to the project.  
+- The project is in state stopped.
+The new project exists in server memory only.  PROJECT SAVE must be used to
+  save the project to a project file on the server disk.
+~#~
+PROJECT RENAME
+Syntax:
+PROJECT RENAME project-name new-project-name
+project-name = Name of the project that will change name.
+new-project-name = New name of this project. The new name must be a valid
+  project name and use characters allowed in the server's filesystem.
+Description:
+Renames a project in the project directory on the server disk. Note: this
+  only renames the on-disk project. It has no impact on the current loaded
+  projects in memory.
+~#~
+PROJECT REPAIR
+Syntax:
+PROJECT REPAIR project-name
+project-name = Name of the project to repair.
+Description:
+Attempts to repair a project that is corrupt or contains invalid data.
+This command will:
+1.Manually process the file and fix common corruptions in the XML. 
+2.Execute the transform 'repair.xslt'. 
+3.Execute the transform 'tidyduplicategroups.xslt'.
+A backup copy of the project will be placed in the tag directory.
+~#~
+PROJECT RESTORE
+Syntax:
+PROJECT RESTORE project-name archive-file
+project-name = Name of the project that will change name.
+archive-file = File to restore from. The filename extension will determine
+  the behaviour of the restore process. If the extension is ".zip", the
+  project will be restored from a ZIP archive (where the tag database is
+  stored as the only entry in the archive, called tagdb.xml). If the extension
+  is ".gz", then file will be ungzipped. If any other extension is given
+  (including .xml), the file will be assumed to be uncompressed XML.
+Description:
+Restores a project from the given archive file to the project name given.
+  The extension of the archive file determines if decompression of the archive
+  file is attempted by this command. See parameters above for details of file
+  extensions and behaviour.
+~#~
+PROJECT SAVE
+Syntax:
+PROJECT SAVE [project-name]
+project-name = (optional) Name of the project to save. If not specified, the
+  current project is saved.
+file-name = (optional) Name of the file the project will be saved to. This
+  can only be specified if the project-name is given. If not specified, then
+  the filename used for the loading of the project will be used.
+Description:
+Saves a project to disk from the C-Gate server, in a form that can be loaded
+  later.
+~#~
+PROJECT START
+Syntax:
+PROJECT START [project-name]
+project-name = (optional) Name of the project. Project names are as returned
+  by the PROJECT DIR command.
+Description:
+Starts a named project (or the current one). This means that C-Gate will
+  open and commence operating with the networks specified in the definition of
+  this project.
+~#~
+PROJECT STOP
+Syntax:
+PROJECT STOP [project-name]
+project-name = (optional) Name of the project to stop. Project names are as
+  returned by the PROJECT DIR command.
+Description:
+Stops the given or current project.
+~#~
+PROJECT USE
+Syntax:
+PROJECT USE [project-name]
+project-name = (optional) Name of the project. Project names are as returned
+  by the PROJECT DIR command.
+Description:
+Sets the context of the current command session to the project name given.
+  This means that all further addressing of networks, groups etc can be
+  performed without using absolute addressing by using the //project-name/
+  prefix. Note that the project must have already been loaded before it can be
+  set to be the default project with the PROJECT USE command.  If no
+  project-name is given the command returns a line: 123 project=project-name
+~#~
+QUIT
+Syntax:
+QUIT | EXIT
+Description:
+Closes the connection to the C-Gate server command interface after sending a
+  final response. Note that this command does not stop the C-Gate server
+  operations or stop operation of the event interface.
+~#~
+RAMP
+Syntax:
+RAMP object-identifier ramp-level [ramp-time ["force"]]
+ramp-level = 1*3DIGIT ["%"]; in the range 0-255, or 0-100 if "%" is used
+ramp-time = 1*2DIGIT ["s" | "m"]; s for seconds, m for minutes
+Description:
+Ramps the specified group or area to the percentage level using the
+  specified ramp time.  Ramp time means the time need to perform this
+  particular ramp operation.
+Ramp Level Parameter
+The ramp level can be given in an absolute (0..255) or percentage (0%-100%)
+  range.
+Ramp Time Parameter
+Supported ramp times are between 0 seconds and 17 minutes.  This command
+  sends the C-Bus Group RAMP command to the specified network.
+If there is no symbol following the ramp time, the time is assumed to be in
+  seconds.   If followed by an 's', then seconds are used.  Following the time
+  by 'm' means the time is assumed to be in minutes.
+The ramp time parameter is optional. If not given, then the ramp time is set
+  to 0 seconds and the ramp is immediate.
+Specifying the optional parameter force, will allow  the command to be sent
+  even if the group is not in an ok state.
+~#~
+REPORT
+Syntax:
+REPORT network-address
+Description:
+Use
+See TREE.
+~#~
+RUN
+Syntax:
+RUN filename [QUIET]
+Description:
+Executes a series of commands in the file specified.
+Specifying QUIET means no output or response events are shown unless an
+  error occurs.
+~#~
+SCENE
+Syntax:
+SCENE command scene-set scene
+command = ("PLAY" | "RECORD")
+scene-set = NAME
+scene = NAME
+Description:
+Performs functions for scenes created with the Scene Module – see the
+  section on the Scene Module in the C-Gate manual.
+Use this command to record or play a scene from the command line.
+~#~
+SECURITY
+Syntax:
+SECURITY [?]
+Description:
+Lists the SECURITY sub-commands:
+SECURITY ARM - Arms a security device.
+SECURITY DISPLAY_MESSAGE - Displays a message on the security panel display.
+SECURITY EMULATE_KEYPAD - Sends a key press message to the Security system.
+SECURITY RAISE_ALARM - Raises an alarm condition with the Security system.
+SECURITY REQUEST_ZONE_NAME - Sends a request zone name message to the
+  security system.
+SECURITY STATUS_REQUEST - Sends a Security Status Request message to the
+  Security device.
+SECURITY TAMPER - Sends a Tamper message to the Security device.
+~#~
+SECURITY ARM
+Syntax:
+SECURITY ARM app arm-mode
+app = application address for this application, normally net/$d0
+arm-mode =    "away" - arm to away mode
+         | "night" - arm to night (home) mode
+         | "day" - arm to day mode
+         | "vacation" - arm to vacation mode
+         | "highest" - arm to highest level of protection
+Description:
+Arms a security device.
+~#~
+SECURITY DISPLAY_MESSAGE
+Syntax:
+SECURITY DISPLAY_MESSAGE app [message]
+app = application address for this application, normally net/$d0
+message = ASCII message to display, up to 17 characters long
+Description:
+Displays a message on the security panel display.  The message is given as
+  the last argument to the command, and includes all characters to the end of
+  the line.  If the message is missing, then a display message will be
+  generated with no display information.
+This message may not be supported by some security systems.
+~#~
+SECURITY EMULATE_KEYPAD
+Syntax:
+SECURITY EMULATE_KEYPAD app key
+app = application address for this application, normally net/$d0
+key = value from 0 to 127 representing an ASCII character, or a value above
+  127 representing a custom keypad value
+Description:
+Sends a key press message to the Security system. This is equivalent to
+  pressing the given key on the security system's keypad.
+This message may not be supported by some security systems.
+~#~
+SECURITY RAISE_ ALARM
+Syntax:
+SECURITY RAISE_ALARM app
+app = application address for this application, normally net/$d0
+Description:
+Raises an alarm condition with the Security system.
+~#~
+SECURITY REQUEST_ZONE_NAME
+Syntax:
+SECURITY REQUEST_ZONE_NAME zone-address
+zone-address = address for the zone, normally: net/$d0 zone-number
+zone-number = decimal number, or HEX number (preceded by '$')
+Description:
+Sends a request zone name message to the security system. The security
+  system will report the zone name using a Zone Name event.
+This message may not be supported by some security systems.
+~#~
+SECURITY STATUS_REQUEST
+Syntax:
+SECURITY STATUS_REQUEST app ("1"|"2")
+app = application address for this application, normally net/$d0
+Description:
+Sends a Security Status Request message to the Security device.  There are
+  two possible request messages, Status Request 1 and Status Request 2. Select
+  the appropriate number as the argument following the application address.
+This command simply performs the request.   Applications connected to the
+  C-Gate server that wish to access the results of the status request must
+  receive and decode the Status Report 1 and Status Report 2 event.
+~#~
+SECURITY TAMPER
+Syntax:
+SECURITY TAMPER app RAISE | DROP
+app = application address for this application, normally net/$d0
+Description:
+Sends a Tamper Raise or Tamper Drop message to the Security device.
+~#~
+SESSION_ID
+Syntax:
+SESSION_ID
+Description:
+When a client application (like C-Bus Toolkit or Schedule Plus) connects to
+  C-Gate it is assigned a sequential command session id to identify its
+  connection with C-Gate. This command returns the ID of the client
+  application's command session.
+~#~
+SESSION_ID ALL
+Syntax:
+SESSION_ID ALL
+Description:
+Returns the ID with extended information of all open command sessions.
+~#~
+SESSION_ID TAG
+Syntax:
+SESSION_ID TAG tag_information
+Description:
+Reports the client application's name and version information to C-Gate
+  which is shown in 'SESSION_ID ALL' command's responses. This command can
+  only be used once per connection.
+~#~
+SET
+Syntax:
+SET object-identifier parameter parameter-value
+parameter = token parameter-value = token
+Description:
+Sets parameters in objects. Objects may be part of connected controlled
+  networks, or may be internal to the C-Gate server. Object parameters are
+  described in detail in the guide for the particular object.
+Many parameters can be set with the set command. Major general parameters
+  for most or all objects are described here.  Specific detail parameters for
+  objects are dealt with in the specific guides for the relevant objects.
+~#~
+SHORTMESSAGE
+Syntax:
+SHORTMESSAGE [?]
+Description:
+Lists the SHORTMESSAGE sub-commands:
+SHORTMESSAGE REFRESH - Transmit the information message of the given type as
+  soon as possible.
+SHORTMESSAGE SEND - Sends a short message.
+~#~
+SHORTMESSAGE REFRESH
+Syntax:
+SHORTMESSAGE REFRESH app info-type
+app = application address for this application, normally net/$AD
+info-type = the type of the message (0..$3F)
+   0 = generic text
+   1 = weather forecast
+   2 = surf report
+   3 = tide times
+   4 = unread emails
+   5 = voice-mail count
+   6 = stock prices ticker
+   7 = news headline
+   8 = other headlines
+   9 = air-quality forecast
+  10 = UV radiation forecast
+  11 = pollen count
+  12 = traffic report
+  13 = sports result
+  14 = horoscope
+  15 = electrical brownout warning
+  16 = irrigation notice
+Description:
+Requests that an information message of the given type be transmitted as
+  soon as possible.
+~#~
+SHORTMESSAGE SEND
+Syntax:
+SHORTMESSAGE SEND app total index info-type number symbol text
+app = application address for this application, normally net/$AD
+total = total number of messages (0..7)
+index = the number for this message (0..7)
+info-type = the type of the message (0..$3F)
+   0 = generic text
+   1 = weather forecast
+   2 = surf report
+   3 = tide times
+   4 = unread emails
+   5 = voice-mail count
+   6 = stock prices ticker
+   7 = news headline
+   8 = other headlines
+   9 = air-quality forecast
+  10 = UV radiation forecast
+  11 = pollen count
+  12 = traffic report
+  13 = sports result
+  14 = horoscope
+  15 = electrical brownout warning
+  16 = irrigation notice
+number = a value in the range 0..$FFFF or a dash (-) if no number portion
+symbol = a value in the range 0..$FF or a dash (-) if no symbol portion
+text = a text string of up to 14 bytes coded as UTF-8, which can be quoted
+  or escaped
+Description:
+Sends a short message.
+~#~
+SHOW
+Syntax:
+See GET.
+~#~
+SHUTDOWN
+Syntax:
+SHUTDOWN
+Description:
+Shuts down the C-Gate server.  The server will not restart, so this command
+  must be used with care.  Once the command has been confirmed with the
+  CONFIRM command, the C-Gate server will shut down, closing the command
+  connection.
+~#~
+STOP
+Syntax:
+STOP command-id
+Description:
+Stops a command that is running in the background of this command session.
+  Comands placed in the background are given a unique ID with special command
+  syntax. See the section on Unique Commands IDs for details.
+Stop only works with commands that specially support it, and all stops will
+  be performed in a safe way.
+~#~
+TELEPHONY CLEAR_DIVERSION
+Syntax:
+TELEPHONY CLEAR_DIVERSION app
+Description:
+Instructs the telephony device to clear any diversion currently in place.
+~#~
+TELEPHONY DIVERT
+Syntax:
+TELEPHONY DIVERT app number
+app = address of the telephony application
+number = up to 16 characters that can be interpreted as a telephone number
+Description:
+Sends a message to the telephony device requesting a diversion be set to the
+  given number.
+~#~
+TELEPHONY ISOLATE_SECONDARY_OUTLET
+Syntax:
+TELEPHONY ISOLATE_SECONDARY_OUTLET app mode
+app = address of the telephony application
+mode = "normal" | "isolate"
+Description:
+Sends a message to change the isolation behaviour of the secondary outlet of
+  the Clipsal 5500TAU Telephone Interface.
+Setting mode to normal will make the secondary outlet behave as normal.
+Setting mode to isolate isolates, or switches out, the secondary outlet
+~#~
+TELEPHONY
+Syntax:
+TELEPHONY [?]
+Description:
+Lists the TELEPHONY sub-commands:
+TELEPHONY CLEAR_DIVERSION - Instructs the telephony device to clear any
+  diversion currently in place.
+TELEPHONY DIVERT - Sends a message to the telephony device requesting a
+  diversion be set to the given number.
+TELEPHONY ISOLATE_SECONDARY_OUTLET - Sends a message to change the isolation
+  behaviour of the secondary outlet of the Clipsal 5500TAU Telephone
+  Interface.
+TELEPHONY RECALL_LAST_NUMBER_REQUEST - Asks a telephony device to return the
+  last number called or received.
+TELEPHONY REJECT_INCOMING_CALL - Sends a message to the telephony device to
+  reject the current incoming call.
+~#~
+TELEPHONY RECALL_LAST_NUMBER_REQUEST 
+Syntax:
+TELEPHONY RECALL_LAST_NUMBER_REQUEST app type
+app = address of the telephony application
+direction = "out" | "in"
+Description:
+Requests that a telephony device return the last number called or received.
+  The information is returned in a RECALL_LAST_NUMBER_RESPONSE message, which
+  will be delivered to the Status Change Port and the event list if
+  appropriately configured.
+Setting direction to out will return the number of the last outgoing call
+  made.
+Setting direction to in will return the number of the last incoming call
+  received
+~#~
+TELEPHONY REJECT_INCOMING_CALL
+Syntax:
+TELEPHONY REJECT_INCOMING_CALL app
+app = address of the telephony application
+Description:
+Sends a message to the telephony device to reject the current incoming call.
+~#~
+TEMPERATURE
+Syntax:
+TEMPERATURE [?]
+Description:
+Lists the TEMPERATURE sub-commands:
+TEMPERATURE BROADCAST - Broadcasts a temperature value on the given
+  Temperature Group.
+~#~
+TEMPERATURE BROADCAST
+Syntax:
+TEMPERATURE BROADCAST temp-group-address celsius-temperature ["force"]
+temp-group-address = the address of the temperature group to send the
+  temperature for as a C-Gate address, for example //proj/net1/$19/1
+celsius-temperature = temperature in degrees celsius with a maximum of one
+  decimal place, with no units given
+Specifying the optional parameter force will allow  the command to be sent
+  even if the group is not in an ok state.
+Description:
+Broadcasts a temperature value on the given Temperature Group.
+~#~
+TERMINATERAMP
+Syntax:
+TERMINATERAMP object-identifier [force]
+Description:
+Sends a TERMINATERAMP message on the specified C-Bus Group in the Lighting
+  application. This stops any ramping operation currently occurring for the
+  given group.
+Specifying the optional parameter force will allow  the command to be sent
+  even if the group is not in an ok state.
+~#~
+TEST_SPAM
+Syntax:
+TEST_SPAM [?]
+Description:
+Lists the TEST_SPAM sub-commands:
+TEST_SPAM EREPORT - Generate random error reporting messages on a network
+TEST_SPAM LIGHTING - Generate random lighting messages on a network
+TEST_SPAM LIST - List active generation sessions.
+TEST_SPAM STOP - Stop an active generation session.
+~#~
+TOPOLOGY
+Syntax:
+TOPOLOGY [?]
+Description:
+Lists the TOPOLOGY sub-commands:
+TOPOLOGY EXPLORE - Instructs the telephony device to clear any diversion
+  currently in place.
+~#~
+TOPOLOGY EXPLORE
+Syntax:
+TOPOLOGY EXPLORE addresses
+addresses = list of space-separated addresses in the form:
+  <type>@address;option=value;option=value"
+Some address examples are serial@COM1, cni@192.168.1.40:10001,
+  modem@COM2;number=85431111;username=222;password=2345
+Note: A port serial must not be in use, to run this command on it.
+Description:
+Explores the topology of a set of interfaces.
+~#~
+TREE
+Syntax:
+TREE network-address
+Description:
+Returns a tree representation of a network.
+~#~
+TREEXML
+Syntax:
+TREEXML network-address ["withsync"] ["withpsync"] ["withqsync"]
+Description:
+Returns an XML-formatted view of an open network and basic information about
+  unit parameters. The withsync, withpsync and withqsync options can be used
+  to initiate the appropriate methods on the unit objects prior to producing
+  the XML output.
+Alternatively TREEXMLDETAIL command can be used to get <State> and
+  <OnlineStatus> of units in addition to all the parameters returned for
+  TREEXML command.
+~#~
+TREEXMLDETAIL
+Syntax:
+TREEXMLDETAIL network-address ["withsync"] ["withpsync"] ["withqsync"]
+Description:
+Returns an XML-formatted view of an open network and basic information about
+  unit parameters. Comparing to the TREEXML command, TREEXMLDETAIL returns two
+  additional parameters for the unit information, e.g. <State> and
+  <OnlineStatus>.
+The withsync, withpsync and withqsync options can be used to initiate the
+  appropriate methods on the unit objects prior to producing the XML output.
+Possible values for <OnlineStatus> are:
+- new: as defined in the network property <DBUnitAddressesNew> 
+- missing: as defined in the network property <DBUnitAddressesMissing> 
+- online: as defined in the network property <DBUnitAddressesOnline> 
+- error: as defined in the network property <DBUnitAddressesError> 
+- duplicate: as defined in the network property <DBUnitAddressesDuplicate> 
+- unknown: this status is not defined and one possible reason is that the
+  unit address is not in the project database or the MMI report but it has
+  been seen by C-Gate at least once since the project is opened in C-Gate,
+  e.g. a unit is plugged into the network then unplugged while it is not in
+  the project database
+~#~
+TRIGGER
+Syntax:
+TRIGGER [?]
+Description:
+Returns help information for the TRIGGER commands
+~#~
+TRIGGER EVENT
+Syntax:
+TRIGGER EVENT trigger-group-address action-selector
+Description:
+Sends a trigger event message to the network to set the trigger-group given
+  as an address to the value of the given action-selector. This is equivalent
+  to a LIGHTING RAMP immediate command for the lighting application.
+  action-selector is either: an integer in the range 0 through 255; or a
+  percentage value (0 - 100) followed by the % sign.
+~#~
+TRIGGER LABEL
+Syntax:
+TRIGGER LABEL app language group-number action-sel [variant] options
+app = application address (normally //proj/net/$CA)
+language =  language code (range 0 through 255)
+group-number = relevant C-Bus group number (range 0 through 255)
+action-sel = action selector | "-"  (dash indicates unset)
+variant = F0 | F1 | F2 | F3 (sets the variant for this label)
+options = ( "text" text-label ) |
+          ( "icon" icon-selector ) |
+          ( "dynamic" icon-selector icon-width icon-height vertical-offset
+  dynamic-icon ) |
+          ( "set_language") |
+          options-byte hex-bytes
+text-label = ASCII text to end of line to be used as label, and its maximum
+  length is 14 characters
+icon-selector = numeric icon selection in the range 0 through 65535
+icon-width = width of the icon in pixels
+icon-height = height of the icon in pixels
+dynamic-icon = block of ASCII-encoded bytes representing the icon, as 16
+  lines of up to 62 bits, encoded as up to
+16 characters of HEX, with each block separated by a colon character.
+If a block is less than 16 characters, the block will be zero-filled on the
+  right. For example:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:
+AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644:AABBCCDDEEFF6644
+- options-byte = integer in the range 0-255, used as the value of the
+  options 1 byte in the command.
+- hex-bytes = a string of hex bytes to follow the command, and its maximum
+  length is 14 characters (i.e. 28 hex byte characters in the command)
+Note: all numeric values except for dynamic icon can be entered as decimal,
+  0x or $ prefixed hex, or 0b prefixed binary.
+Description:
+Performs label setting on devices that support dynamic labels.
+Note: For devices that support unicode dynamic labels, if a group/variant
+  already has a unicode label it will not accept text labels sent with this
+  command.  To set or clear unicode labels see the TRIGGER UNICODELABEL
+  command.
+~#~
+TRIGGER UNICODELABEL
+Syntax:
+TRIGGER UNICODELABEL app language group-number action-sel variant option
+  text-label|hex-bytes
+app = application address (normally //proj/net/$CA)
+language =  language code (range 0 through 255)
+group-number = relevant C-Bus group number (range 0 through 255)
+action-sel = action selector | "-"  (dash indicates unset) (should always be
+  dash)
+variant = F0 | F1 | F2 | F3 (sets the variant for this label)
+option = ( "text" text-label ) |
+         ( "raw" hex bytes string encoded in UTF-8 )
+text-label = ASCII text to end of line to be used as label if option = text
+hex-bytes =  a string of hex bytes to follow the command if option = raw
+Description:
+Sets unicode labels on devices that support unicode dynamic labels. The
+  label string should be encoded in UTF-8.
+To clear a unicode label simply provide no parameter for text-label or
+  hex-bytes.
+Note: Please use the raw option to send unicode characters to C-Gate. Using
+  the text option to send unicode may not always work.
+~#~
+UNLOCK
+Syntax:
+UNLOCK object-identifier
+Description:
+Releases an advisory lock on an object. Such a lock would have been set with
+  the LOCK command.
+Note that the locking is advisory only.  Applications must cooperate to make
+  a locking system work.
+~#~
