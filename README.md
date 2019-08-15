@@ -1,8 +1,6 @@
 CGate Server
 ============
 
-## About
-
 This docker image installs the Clipsal CGate Server for use with CBus applicances.
 
 ## Install
