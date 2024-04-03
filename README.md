@@ -1,6 +1,8 @@
 CGate Server
 ============
 
+![Docker Pulls](https://img.shields.io/docker/pulls/steppinghat/cgate-server?logo=docker)
+
 This docker image installs the Clipsal CGate Server for use with CBus applicances.
 
 ## Install
