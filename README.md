@@ -34,12 +34,9 @@ docker create \
   steppinghat/cgate-server
 ```
 
-### docker-compose
-
-Compatble with docker-compose v3 schemas
+### docker compose
 
 ```
-version: '3'
 services:
   cgate-server:
     image: steppinghat/cgate-server
@@ -77,5 +74,42 @@ services:
 | `-v :/config` | CGate config directory (`access.txt` goes here) |
 | `-v :/tag` | CGate tag directory (XML project files go here) |
 | `-v :/logs` | CGate logs directory |
+
+## Development
+
+### Downloading CGate server
+
+CGate server is downloaded from the Clipsal website during the build process.
+
+The exact download URL is set by the `CGATE_DOWNLOAD_URL` ARG in the Dockerfile.
+
+One thing to note, is that some download links have multiple files in the URL. The Clipsal
+website will zip these files into a single archive, which we don't want as we only want the
+zip file for cgate itself.
+
+Make sure that the URL only has one file specified, for example:
+
+```
+/files?p_File_Name=cgate-2.11.8_3282.zip
+# Will only download the cgate zip file
+
+
+/files?p_Doc_Ref=C-Gate-V2.11.8&p_enDocType=Software+-+Release&p_File_Name=cgate-2.11.8_3282.zip
+# Will download the release notes and the cgate zip file, bundled together in a single zip
+```
+
+### Building the container
+
+Build the container using the following command:
+
+```bash
+docker build -t steppinghat/cgate-server .
+```
+
+Verify the build works by running it:
+
+```bash
+docker run steppinghat/cgate-server
+```
 
 _Written by Javan Eskander @SteppingHat_
