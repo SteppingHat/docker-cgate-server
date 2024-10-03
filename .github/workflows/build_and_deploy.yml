@@ -1,9 +1,9 @@
-ame: Build and Push Docker Image to Docker Hub
+name: Build and Push Docker Image to Docker Hub
 
 on:
   push:
     branches: [ "dev", "master" ]
-    tags:
+    tags: "*"
   pull_request:
     branches: [ "dev", "master" ]
     types: [ "closed" ]
